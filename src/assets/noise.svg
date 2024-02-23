@@ -1,0 +1,18 @@
+<svg
+  xmlns='http://www.w3.org/2000/svg'
+  xmlns:xlink='http://www.w3.org/1999/xlink'
+  width='300' height='300'>
+
+    <filter id="grayscale">
+        <feColorMatrix type="saturate" values="0.10"/>
+    </filter>
+    <filter id='n' x='0' y='0'>
+        <feTurbulence
+            baseFrequency='0.7'
+            stitchTiles='stitch'/>
+    </filter>
+
+    <g filter="url(#grayscale)">
+        <rect width='300' height='300' filter="url(#n)" opacity='0.2'/>
+    </g>
+</svg>

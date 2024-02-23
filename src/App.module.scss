@@ -1,0 +1,25 @@
+.App {
+  width: 100vw;
+  height: 100vh;
+  background: url('assets/noise.svg'),
+    radial-gradient(at 60% 90%, #102692 0%, #51111e 100%);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.wordInputContainer {
+  width: 600px;
+  display: grid;
+  column-gap: 10px;
+  align-items: center;
+  grid-template-columns: 50% 50%;
+  height: 100%;
+}
+
+.wordInput {
+  input {
+    font-size: 2rem;
+    text-align: right;
+  }
+}
