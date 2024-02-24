@@ -1,8 +1,9 @@
 import { ArrowForward } from '@mui/icons-material';
 import { IconButton, TextField } from '@mui/material';
-import { ChangeEvent, FC, Ref, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import styles from './WordInput.module.scss';
 import WordRow from './components/WordRow/WordRow';
+import { Word } from '../../models/word';
 
 interface WordInputProps { }
 
@@ -16,46 +17,46 @@ const WordInput: FC<WordInputProps> = () => {
 
   const [inputValue, setInputValue] = useState<string>('');
 
-  let wordsEnd: HTMLDivElement | null;
+  let wordsEnd: HTMLDivElement | null = null;
 
-  useEffect(() => {
-    document.addEventListener('keydown', keydownHandler);
-
-    return () => {
-      document.removeEventListener('keydown', keydownHandler);
+  const onNewWordClick = useCallback(() => {
+    if (inputValue.length > 0) {
+      setWords(prevWords => [...prevWords, { text: inputValue }]);
+      setInputValue('');
     }
   }, [inputValue]);
 
   useEffect(() => {
-    wordsEnd?.scrollIntoView();
-  }, [words]);
+    function keydownHandler(e: KeyboardEvent) {
+      if (e.key === 'Enter') onNewWordClick();
+    }
 
-  function keydownHandler(e: KeyboardEvent) {
-    if (e.key === 'Enter') onNewWordClick();
-  }
+    document.addEventListener('keydown', keydownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keydownHandler);
+    };
+  }, [inputValue, onNewWordClick]);
+
+  useEffect(() => {
+    wordsEnd?.scrollIntoView();
+  }, [words, wordsEnd]);
 
   function onTextChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setInputValue(e.target.value);
   }
 
-  function onNewWordClick() {
-    if (inputValue.length > 0) {
-      setWords(prevWords => [...prevWords, { text: inputValue }]);
-      setInputValue('');
-    }
-  }
-
   function renderWords() {
     return words.map((word, id) => {
-      return <WordRow word={word} key={id} />
+      return <WordRow word={word} key={id} />;
     });
   }
 
   return (
-    <div className={styles.WordInput} data-testid="WordInput">
+    <div className={styles.WordInput} data-testid='WordInput'>
       <div className={styles.words}>
         {renderWords()}
-        <div style={{ float:"left", clear: "both" }}
+        <div style={{ float:'left', clear: 'both' }}
              ref={(el) => { wordsEnd = el; }}>
         </div>
       </div>

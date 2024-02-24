@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styles from './WordRow.module.scss';
-import { Typography } from '@mui/material';
+import { Word } from '../../../../models/word';
 
 interface WordRowProps {
   word: Word;
@@ -17,6 +17,6 @@ const WordRow: FC<WordRowProps> = (props) => {
       </span>
     </div>
   );
-}
+};
 
 export default WordRow;

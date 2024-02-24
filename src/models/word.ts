@@ -1,4 +1,4 @@
-interface Word {
-    text: string;
-    translation?: string;
+export interface Word {
+  text: string;
+  translation?: string;
 }

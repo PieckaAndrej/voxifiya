@@ -6,7 +6,7 @@ import WordRow from './WordRow';
 describe('<WordRow />', () => {
   test('it should mount', () => {
     render(<WordRow />);
-    
+
     const wordRow = screen.getByTestId('WordRow');
 
     expect(wordRow).toBeInTheDocument();

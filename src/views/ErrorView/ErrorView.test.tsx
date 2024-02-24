@@ -6,7 +6,7 @@ import ErrorView from './ErrorView';
 describe('<ErrorView />', () => {
   test('it should mount', () => {
     render(<ErrorView />);
-    
+
     const errorView = screen.getByTestId('ErrorView');
 
     expect(errorView).toBeInTheDocument();

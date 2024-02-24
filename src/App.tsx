@@ -8,6 +8,6 @@ const App: FC = () => {
       <Outlet/>
     </div>
   );
-}
+};
 
 export default App;

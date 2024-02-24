@@ -6,7 +6,7 @@ import WordInput from './WordInput';
 describe('<WordInput />', () => {
   test('it should mount', () => {
     render(<WordInput />);
-    
+
     const wordInput = screen.getByTestId('WordInput');
 
     expect(wordInput).toBeInTheDocument();
