@@ -10,6 +10,7 @@ import ErrorView from './views/ErrorView/ErrorView.tsx';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme.ts';
 import WordInput from './views/WordInput/WordInput.tsx';
+import Login from './views/Login/Login/Login.tsx';
 
 const router = createBrowserRouter([
   {
@@ -18,8 +19,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorView />,
     children: [
       {
-        path: 'input',
+        path: '/input',
         element: <WordInput/>
+      },
+      {
+        path: '/login',
+        element: <Login/>
       }
     ]
   },

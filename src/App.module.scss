@@ -1,7 +1,18 @@
 .App {
   width: 100vw;
   height: 100vh;
-  background: url('assets/noise.svg'),
-    radial-gradient(at 60% 90%, #102692 0%, #51111e 100%);
   display: flex;
+  transition-property: background-position, background-color;
+  background-size: 200% 200%;
+  background-image: radial-gradient(circle at 10% 30%, #0b5250, transparent 40%),
+    radial-gradient(circle at 80% 60%, #102692, transparent 40%);
+}
+
+.noise {
+  background-image: url('assets/noise.svg');
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
