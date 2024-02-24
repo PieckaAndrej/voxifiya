@@ -1,0 +1,55 @@
+$column-gap: 10px;
+
+.WordInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 50%;
+  padding-bottom: 24px;
+}
+
+.inputRow {
+  width: 100%;
+  display: grid;
+  column-gap: $column-gap;
+  padding-right: $column-gap;
+  grid-template-columns: 50% 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: 600px;
+  transform: translate(-50%, -50%);
+}
+
+.words {
+  overflow-y: auto;
+  align-items: center;
+}
+
+.input {
+  input {
+    font-size: 2rem;
+    text-align: right;
+  }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba($color: white, $alpha: 0.2); 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba($color: white, $alpha: 0.4); 
+}

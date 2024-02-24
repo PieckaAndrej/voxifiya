@@ -9,12 +9,19 @@ import {
 import ErrorView from './views/ErrorView/ErrorView.tsx';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme.ts';
+import WordInput from './views/WordInput/WordInput.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App/>,
     errorElement: <ErrorView />,
+    children: [
+      {
+        path: 'input',
+        element: <WordInput/>
+      }
+    ]
   },
 ]);
 

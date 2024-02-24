@@ -1,0 +1,20 @@
+$column-gap: 10px;
+
+.WordRow {
+  display: grid;
+  column-gap: $column-gap;
+  padding-right: $column-gap;
+  grid-template-columns: 50% 50%;
+  width: 100%;
+  font-size: 2rem;
+}
+
+.text {
+  color: rgba($color: #fff, $alpha: 0.9);
+  text-align: right;
+}
+
+.translation {
+  color: rgba($color: #fff, $alpha: 0.6);
+  text-align: left;
+}
