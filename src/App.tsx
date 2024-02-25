@@ -1,33 +1,28 @@
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import styles from './App.module.scss';
-import { FC, useEffect, useMemo, useState } from 'react';
-import { Button } from '@mui/material';
+
+interface BackgroundGradient {
+  color: string;
+  className: string;
+}
 
 const App: FC = () => {
   const location = useLocation();
-  const [background, setBackground] = useState<{ color: string, position: string }>();
-  const [transitionDuration, setTransitionDuration] = useState('');
+  const [background, setBackground] = useState<BackgroundGradient>();
 
-  const backgroundConfig = useMemo(() => {
+  const backgroundConfig: {[key: string]: BackgroundGradient} = useMemo(() => {
     return {
       login: {
         color: '#090a2b',
-        position: '0% 0%'
+        className: styles.loginGradient
       },
       input: {
         color: '#51111e',
-        position: '100% 100%'
+        className: styles.inputGradient
       },
-    }
+    };
   }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setTransitionDuration('60s');
-    }, 100)
-  }, [])
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     switch (location.pathname) {
@@ -38,23 +33,23 @@ const App: FC = () => {
         setBackground(backgroundConfig.login);
         break;
     }
-
   }, [location, background, backgroundConfig]);
 
+  const getGradients = useCallback(() => {
+    return Object.keys(backgroundConfig).map((name, index) => {
+      return <div key={index}
+        className={[styles.gradient, backgroundConfig[name].className].join(' ')}
+        style={{opacity: background == backgroundConfig[name] ? '1' : '0'}}></div>;
+    });
+  }, [backgroundConfig, background]);
+
   return (
-    <div className={styles.App} style={{
-      backgroundPosition: background?.position,
-      backgroundColor: background?.color,
-      transitionDuration
-      }}>
+    <div className={styles.App} style={{backgroundColor: background?.color}}>
+      {getGradients()}
       <div className={styles.noise}></div>
-      <Button onClick={() => navigate('/input')}>
-        hello
-      </Button>
-      <Button onClick={() => navigate('/login')}>
-        h 
-      </Button>
-      <Outlet />
+      <div className={styles.container}>
+        <Outlet />
+      </div>
     </div>
   );
 };
