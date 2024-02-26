@@ -27,7 +27,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
   }, [inputValue]);
 
   useEffect(() => {
-    function keydownHandler(e: KeyboardEvent) {
+    const keydownHandler = (e: KeyboardEvent) => {
       if (e.key === 'Enter') onNewWordClick();
     }
 
@@ -42,18 +42,18 @@ const WordInputPage: FC<WordInputPageProps> = () => {
     wordsEnd?.scrollIntoView();
   }, [words, wordsEnd]);
 
-  function onTextChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  const onTextChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
   }
 
-  function renderWords() {
+  const renderWords = () => {
     return words.map((word, id) => {
       return <WordRow word={word} key={id} />;
     });
   }
 
   return (
-    <div className={styles.WordInput} data-testid='WordInput'>
+    <div className={styles.WordInputPage} data-testid='WordInputPage'>
       <div className={styles.words}>
         {renderWords()}
         <div style={{ float:'left', clear: 'both' }}

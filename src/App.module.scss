@@ -2,8 +2,6 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  transition-property: background-color;
-  transition-duration: 3s;
 }
 
 .container {
@@ -13,25 +11,14 @@
   height: 100%;
 }
 
-.wordsGradient {
-  background-image: radial-gradient(circle at 80% 30%, #021054, transparent);
-}
-
-.loginGradient {
-  background-image: radial-gradient(circle at 10% 30%, #0b5250, transparent);
-}
-
 .noise {
   background-image: url('assets/noise.svg');
 }
 
-.noise,
-.gradient {
+.noise {
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  transition-property: opacity;
-  transition-duration: 3s;
 }

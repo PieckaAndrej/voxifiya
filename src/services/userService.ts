@@ -1,6 +1,6 @@
-import axios from "axios";
-import { environment } from "../environment";
-import { User } from "../models/user";
+import axios from 'axios';
+import { environment } from '../environment';
+import { User } from '../models/user';
 
 const instance = axios.create({
   baseURL: `${environment.backendUrl}/api/user/`,
@@ -9,4 +9,4 @@ const instance = axios.create({
 
 export const getMe = () => {
   return instance.get<User>('me');
-}
+};

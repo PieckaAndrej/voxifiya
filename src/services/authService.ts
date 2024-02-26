@@ -1,5 +1,5 @@
-import axios from "axios";
-import { environment } from "../environment";
+import axios from 'axios';
+import { environment } from '../environment';
 
 const instance = axios.create({
   baseURL: `${environment.backendUrl}/api/auth/`,
@@ -11,8 +11,8 @@ export const login = (user: string, password: string) => {
     user,
     password
   });
-}
+};
 
 export const getSession = () => {
   return instance.get('session');
-}
+};

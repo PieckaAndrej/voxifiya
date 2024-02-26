@@ -1,13 +1,12 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
-import styles from './LoginPage.module.scss';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Button, FilledInput, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, Link } from '@mui/material';
-import { VisibilityOff, Visibility } from '@mui/icons-material';
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { login } from '../../services/authService';
-import { useAuth } from '../../hooks/useAuth';
-import { getMe } from '../../services/userService';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import Cookies from 'js-cookie';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { login } from '../../services/authService';
+import styles from './LoginPage.module.scss';
 
 interface LoginPageProps { }
 
@@ -20,9 +19,7 @@ const LoginPage: FC<LoginPageProps> = () => {
 
   const auth = useAuth();
 
-  const [csrfToken, setCsrfToken] = useLocalStorage('csrfToken', null);
-
-  const navigate = useNavigate();
+  const [, setCsrfToken] = useLocalStorage('csrfToken', null);
 
   const onClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -37,7 +34,7 @@ const LoginPage: FC<LoginPageProps> = () => {
         [e.target.name]: e.target.value
       };
     });
-  }
+  };
 
   const onFormSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -46,19 +43,12 @@ const LoginPage: FC<LoginPageProps> = () => {
       .then(() => {
         setCsrfToken(Cookies.get('X-CSRF-Token'));
 
-        getMe()
-          .then((response) => {
-            auth?.login(response.data);
-            navigate('/words');
-          })
-          .catch((error) => {
-            // TODO catch error
-          });
+        auth?.login('/words');
       })
-      .catch((error) => {
+      .catch(() => {
         // TODO catch error
       });
-  }
+  };
 
   return (
     <div className={styles.LoginPage} data-testid="LoginPage">
@@ -109,7 +99,7 @@ const LoginPage: FC<LoginPageProps> = () => {
         <Link component={RouterLink} to='/register'>Register</Link>
       </div>
     </div>
-  )
+  );
 };
 
 export default LoginPage;

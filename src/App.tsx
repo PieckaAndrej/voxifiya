@@ -1,64 +1,55 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { FC, useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import styles from './App.module.scss';
-import LoginPage from './pages/LoginPage/LoginPage';
-import HomePage from './pages/HomePage/HomePage';
-import { AuthProvider } from './hooks/useAuth';
+import GradientBackground from './components/GradientBackground/GradientBackground';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import WordInputPage from './pages/WordInputPage/WordInputPage';
+import { useAuth } from './hooks/useAuth';
+import { useLocalStorage } from './hooks/useLocalStorage';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
+import HomePage from './pages/HomePage/HomePage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import WordInputPage from './pages/WordInputPage/WordInputPage';
+import { getSession } from './services/authService';
 
-interface BackgroundGradient {
-  color: string;
-  className: string;
-}
 
 const App: FC = () => {
-  const location = useLocation();
-  const [background, setBackground] = useState<BackgroundGradient>();
+  const [csrfToken, setCsrfToken] = useLocalStorage('csrfToken', null);
+  const auth = useAuth();
 
-  const backgroundConfig: {[key: string]: BackgroundGradient} = useMemo(() => {
-    return {
-      login: {
-        color: '#090a2b',
-        className: styles.loginGradient
-      },
-      words: {
-        color: '#51111e',
-        className: styles.wordsGradient
-      },
-    };
-  }, []);
 
   useEffect(() => {
-    switch (location.pathname) {
-      case '/words':
-        setBackground(backgroundConfig.words);
-        break;
-      case '/login':
-        setBackground(backgroundConfig.login);
-        break;
-    }
-  }, [location, background, backgroundConfig]);
+    if (!Cookies.get('Voxifiya.SessionId')) {
+      if (csrfToken) {
+        // Needs to be partitioned and js-cookie doesn't support it yet
+        // Cookies.set('X-CSRF-Token', csrfToken, { secure: true, sameSite: 'None' });
+        document.cookie = `X-CSRF-Token=${csrfToken}; path=/; secure; samesite=none; Partitioned`;
 
-  const getGradients = useCallback(() => {
-    return Object.keys(backgroundConfig).map((name, index) => {
-      return <div key={index}
-        className={[styles.gradient, backgroundConfig[name].className].join(' ')}
-        style={{opacity: background == backgroundConfig[name] ? '1' : '0'}}></div>;
-    });
-  }, [backgroundConfig, background]);
+        getSession()
+          .then(() => {
+            setCsrfToken(Cookies.get('X-CSRF-Token'));
+            auth?.login();
+          })
+          .catch(() => {
+            auth?.logout();
+          });
+      } else {
+        auth?.logout();
+      }
+    } else if (!auth?.user) {
+      auth?.login();
+    }
+  }, [auth, csrfToken, setCsrfToken]);
 
   return (
-    <div className={styles.App} style={{backgroundColor: background?.color}}>
-      {getGradients()}
+    <div className={styles.App} >
+      <GradientBackground />
       <div className={styles.noise}></div>
       <div className={styles.container}>
-        <AuthProvider>
+        {
+          !auth?.loading &&
           <Routes>
             <Route path="*" element={<ErrorPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="login" element={<LoginPage />} />
             <Route
               path="words"
               element={
@@ -67,8 +58,21 @@ const App: FC = () => {
                 </ProtectedRoute>
               }
             />
+            {
+              auth?.user ? (
+                <>
+                  <Route path="/" element={<Navigate to={'/words'} />} />
+                  <Route path="login" element={<Navigate to={'/'} />} />
+                </>
+              ) : (
+                <>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="login" element={<LoginPage />} />
+                </>
+              )
+            }
           </Routes>
-        </AuthProvider>
+        }
       </div>
     </div>
   );
