@@ -1,6 +1,12 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import styles from './App.module.scss';
+import LoginPage from './pages/LoginPage/LoginPage';
+import HomePage from './pages/HomePage/HomePage';
+import { AuthProvider } from './hooks/useAuth';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import WordInputPage from './pages/WordInputPage/WordInputPage';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 interface BackgroundGradient {
   color: string;
@@ -17,17 +23,17 @@ const App: FC = () => {
         color: '#090a2b',
         className: styles.loginGradient
       },
-      input: {
+      words: {
         color: '#51111e',
-        className: styles.inputGradient
+        className: styles.wordsGradient
       },
     };
   }, []);
 
   useEffect(() => {
     switch (location.pathname) {
-      case '/input':
-        setBackground(backgroundConfig.input);
+      case '/words':
+        setBackground(backgroundConfig.words);
         break;
       case '/login':
         setBackground(backgroundConfig.login);
@@ -48,7 +54,21 @@ const App: FC = () => {
       {getGradients()}
       <div className={styles.noise}></div>
       <div className={styles.container}>
-        <Outlet />
+        <AuthProvider>
+          <Routes>
+            <Route path="*" element={<ErrorPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route
+              path="words"
+              element={
+                <ProtectedRoute>
+                  <WordInputPage />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </AuthProvider>
       </div>
     </div>
   );

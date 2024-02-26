@@ -1,13 +1,13 @@
 import { ArrowForward } from '@mui/icons-material';
 import { IconButton, TextField } from '@mui/material';
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
-import styles from './WordInput.module.scss';
+import styles from './WordInputPage.module.scss';
 import WordRow from './components/WordRow/WordRow';
 import { Word } from '../../models/word';
 
-interface WordInputProps { }
+interface WordInputPageProps { }
 
-const WordInput: FC<WordInputProps> = () => {
+const WordInputPage: FC<WordInputPageProps> = () => {
   const [words, setWords] = useState<Word[]>([
     {
       text: 'hello',
@@ -66,12 +66,12 @@ const WordInput: FC<WordInputProps> = () => {
           placeholder='Type here'
           autoFocus={true}
           className={styles.input}
-          onChange={(e) => onTextChange(e)}
+          onChange={onTextChange}
           value={inputValue}
           variant='standard' />
         <div>
           <IconButton
-            onClick={() => onNewWordClick()}
+            onClick={onNewWordClick}
             aria-label="arrow-forward"
             size='large'>
             <ArrowForward />
@@ -82,4 +82,4 @@ const WordInput: FC<WordInputProps> = () => {
   );
 };
 
-export default WordInput;
+export default WordInputPage;
