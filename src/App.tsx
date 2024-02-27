@@ -1,17 +1,14 @@
-import Cookies from 'js-cookie';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import styles from './App.module.scss';
 import GradientBackground from './components/GradientBackground/GradientBackground';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import Sidenav from './components/Sidenav/Sidenav';
 import { useAuth } from './hooks/useAuth';
-import { useLocalStorage } from './hooks/useLocalStorage';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import WordInputPage from './pages/WordInputPage/WordInputPage';
-import { getSession } from './services/authService';
-import Sidenav from './components/Sidenav/Sidenav';
 
 
 const App: FC = () => {

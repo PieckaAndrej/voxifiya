@@ -23,6 +23,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // call this function when you want to authenticate the user
   const login = useCallback(async (navigatePath: string | undefined = undefined) => {
+    if (!csrfToken) {
+      setCsrfToken(Cookies.get('X-CSRF-Token'));
+    }
+    
     getMe()
       .then((response) => {
         setUser(response.data);
@@ -37,7 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [setUser, setLoading, navigate]);
+  }, [setUser, setLoading, navigate, csrfToken, setCsrfToken]);
 
   // call this function to sign out logged in user
   const logout = useCallback((navigatePath: string | undefined = undefined) => {

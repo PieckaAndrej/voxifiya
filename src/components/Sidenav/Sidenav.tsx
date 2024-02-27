@@ -9,8 +9,8 @@ const Sidenav: FC<SidenavProps> = () => {
   const auth = useAuth();
 
   return (
-    <div className={styles.Sidenav} data-testid="Sidenav">
-      <Button onClick={() => auth?.logout()}>
+    <div className={styles.Sidenav} data-testid='Sidenav'>
+      <Button size='small' onClick={() => auth?.logout()}>
         Logout
       </Button>
     </div>

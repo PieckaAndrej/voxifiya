@@ -8,12 +8,7 @@ import { Word } from '../../models/word';
 interface WordInputPageProps { }
 
 const WordInputPage: FC<WordInputPageProps> = () => {
-  const [words, setWords] = useState<Word[]>([
-    {
-      text: 'hello',
-      translation: 'hey'
-    }
-  ]);
+  const [words, setWords] = useState<Word[]>([]);
 
   const [inputValue, setInputValue] = useState<string>('');
 
@@ -68,6 +63,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
           className={styles.input}
           onChange={onTextChange}
           value={inputValue}
+          autoComplete='off'
           variant='standard' />
         <div>
           <IconButton

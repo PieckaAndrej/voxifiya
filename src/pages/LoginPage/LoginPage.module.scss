@@ -1,28 +1,44 @@
 .LoginPage {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
 }
 
 .inputs {
-    display: inherit;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-    max-width: 400px;
+  display: inherit;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  max-width: 400px;
 }
 
 .header {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .registerLink {
-    display: inline-flex;
-    gap: 5px;
-    color: var(--primary-fg-color);
+  display: inline-flex;
+  gap: 5px;
+  color: var(--primary-fg-color);
+}
+
+.alert {
+  animation-name: openAlert;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes openAlert {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  100% {
+    opacity: 1;
+  }
 }

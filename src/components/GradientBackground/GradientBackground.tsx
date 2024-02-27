@@ -20,7 +20,7 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
         className: styles.loginGradient
       },
       words: {
-        color: '#51111e',
+        color: '#0c0b43',
         className: styles.wordsGradient
       },
     };
