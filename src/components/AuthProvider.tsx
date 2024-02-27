@@ -1,9 +1,10 @@
-import { createContext, ReactNode, useCallback, useMemo, useState } from 'react';
+import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../models/user';
 import { getMe } from '../services/userService';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import Cookies from 'js-cookie';
+import { getSession, postLogout } from '../services/authService';
 
 export interface Auth {
   user?: User;
@@ -17,7 +18,7 @@ export const AuthContext = createContext<Auth | null>(null);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | undefined>();
   const [loading, setLoading] = useState<boolean>(true);
-  const [, setCsrfToken] = useLocalStorage('csrfToken', null);
+  const [csrfToken, setCsrfToken] = useLocalStorage('csrfToken', null);
   const navigate = useNavigate();
 
   // call this function when you want to authenticate the user
@@ -44,7 +45,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
 
     setCsrfToken(null);
-    Cookies.remove('X-CSRF-Token');
+
+    if (Cookies.get('Voxifiya.SessionId')) {
+      postLogout();
+    }
 
     if (navigatePath) {
       navigate(navigatePath, { replace: true });
@@ -57,6 +61,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     login,
     logout,
   }), [user, loading, login, logout]);
+
+  useEffect(() => {
+    if (!Cookies.get('Voxifiya.SessionId')) {
+      if (csrfToken) {
+        // Needs to be partitioned and js-cookie doesn't support it yet
+        // Cookies.set('X-CSRF-Token', csrfToken, { secure: true, sameSite: 'None' });
+        document.cookie = `X-CSRF-Token=${csrfToken}; path=/; secure; samesite=none; Partitioned`;
+
+        getSession()
+          .then(() => {
+            setCsrfToken(Cookies.get('X-CSRF-Token'));
+            value?.login();
+          })
+          .catch(() => {
+            setLoading(false);
+          });
+      } else {
+        value?.logout();
+      }
+    } else if (!value?.user && csrfToken) {
+      value?.login();
+    }
+  }, [value, csrfToken, setCsrfToken, setLoading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

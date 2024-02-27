@@ -6,12 +6,16 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export const login = (user: string, password: string) => {
+export const postLogin = (user: string, password: string) => {
   return instance.post('login', {
     user,
     password
   });
 };
+
+export const postLogout = () => {
+  return instance.post('logout');
+}
 
 export const getSession = () => {
   return instance.get('session');

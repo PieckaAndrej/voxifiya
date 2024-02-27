@@ -5,7 +5,7 @@ import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { login } from '../../services/authService';
+import { postLogin } from '../../services/authService';
 import styles from './LoginPage.module.scss';
 
 interface LoginPageProps { }
@@ -39,7 +39,7 @@ const LoginPage: FC<LoginPageProps> = () => {
   const onFormSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    login(formValues.user, formValues.password)
+    postLogin(formValues.user, formValues.password)
       .then(() => {
         setCsrfToken(Cookies.get('X-CSRF-Token'));
 
