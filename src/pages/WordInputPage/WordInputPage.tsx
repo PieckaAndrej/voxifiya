@@ -1,13 +1,13 @@
 import { ArrowForward } from '@mui/icons-material';
 import { CircularProgress, IconButton, TextField } from '@mui/material';
-import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
-import styles from './WordInputPage.module.scss';
-import SentenceRow from './components/SentenceRow/SentenceRow';
+import { ChangeEvent, FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
+import { useAuth } from '../../hooks/useAuth';
+import { Page } from '../../models/page';
 import { Sentence } from '../../models/sentence';
 import { getSentences, postSentence } from '../../services/sentenceService';
-import { useAuth } from '../../hooks/useAuth';
-import InfiniteScroll from 'react-infinite-scroller';
-import { Page } from '../../models/page';
+import styles from './WordInputPage.module.scss';
+import SentenceRow from './components/SentenceRow/SentenceRow';
 
 interface WordInputPageProps { }
 
@@ -19,8 +19,15 @@ const WordInputPage: FC<WordInputPageProps> = () => {
 
   const [inputValue, setInputValue] = useState<string>('');
   const [scroll, setScroll] = useState<boolean>(false);
+  const [textInputAtBottom, setTextInputAtBottom] = useState<boolean>(false);
 
-  let wordsEndRef = useRef<HTMLDivElement>(null);
+  const wordsEndRef = useRef<HTMLDivElement>(null);
+  const textInputRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const textInputMarginTop = useMemo(() => {
+    return 10;
+  }, []);
 
   const onNewWordClick = useCallback(() => {
     if (inputValue.length > 1) {
@@ -44,13 +51,15 @@ const WordInputPage: FC<WordInputPageProps> = () => {
     }
   }, [inputValue, auth, setSentences, setScroll]);
 
+  // If new sentence scroll to it
   useEffect(() => {
     if (scroll) {
       wordsEndRef?.current?.scrollIntoView({behavior: 'smooth'});
       setScroll(false);
     }
-  }, [scroll, sentences, setScroll])
+  }, [scroll, sentences, setScroll]);
 
+  // For registering if enter was pressed
   useEffect(() => {
     const keydownHandler = (e: KeyboardEvent) => {
       if (e.key === 'Enter') onNewWordClick();
@@ -101,9 +110,77 @@ const WordInputPage: FC<WordInputPageProps> = () => {
     });
   };
 
+  useEffect(() => {
+    if (!!scrollRef.current && !!textInputRef.current) {
+      const scrollContainer = scrollRef.current;
+      const targetElement = textInputRef.current;
+
+
+      const handleScroll = () => {
+        const containerRect = scrollContainer.getBoundingClientRect();
+        const targetRect = targetElement.getBoundingClientRect();
+
+        // Check if the bottom of the target element is within the viewport
+        const isBottomVisible = (textInputAtBottom ?
+          (targetRect.top - textInputMarginTop) : targetRect.bottom)
+          > containerRect.bottom - textInputMarginTop;
+
+        setTextInputAtBottom(isBottomVisible);
+      };
+
+      // Attach the scroll event listener
+      scrollContainer.addEventListener('scroll', handleScroll);
+
+      // Initial check
+      handleScroll();
+
+      // Clean up the event listener on component unmount
+      return () => {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [scrollRef, textInputRef, textInputAtBottom, textInputMarginTop, setTextInputAtBottom]);
+
+  const renderTextField = (floating: boolean) => {
+    const classes = [styles.inputRow];
+
+    // Assign classes based on if it's floating or not
+    if (floating) {
+      classes.push(styles.floatingInput);
+    } else if (textInputAtBottom) {
+      classes.push(styles.hiddenInput);
+    }
+
+    return (
+      <div className={classes.join(' ')} ref={floating ? null : textInputRef}>
+        <TextField
+          id={floating ? 'text-input' : 'text-input-floating'}
+          placeholder='Type here'
+          autoFocus={true}
+          className={styles.input}
+          onChange={onTextChange}
+          value={inputValue}
+          autoComplete='off'
+          sx={{maxWidth: '300px', justifySelf: 'flex-end'}}
+          variant='standard' />
+        <div>
+          <IconButton
+            onClick={onNewWordClick}
+            aria-label="arrow-forward"
+            size='large'>
+            <ArrowForward />
+          </IconButton>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className={styles.WordInputPage} data-testid='WordInputPage'>
-      <div className={styles.scroll}>
+      {textInputAtBottom && renderTextField(true)}
+      <div className={styles.scroll} ref={scrollRef}
+        style={textInputAtBottom ?
+          {marginBottom: `${(textInputRef.current?.clientHeight ?? 0) + textInputMarginTop}px`} : {}}>
         <InfiniteScroll
             loadMore={loadSentences}
             hasMore={sentences?.hasNextPage ?? true}
@@ -122,25 +199,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
         <div style={{ float:'left', clear: 'both' }}
             ref={wordsEndRef}>
         </div>
-      </div>
-      <div className={styles.inputRow}>
-        <TextField
-          id='word-input'
-          placeholder='Type here'
-          autoFocus={true}
-          className={styles.input}
-          onChange={onTextChange}
-          value={inputValue}
-          autoComplete='off'
-          variant='standard' />
-        <div>
-          <IconButton
-            onClick={onNewWordClick}
-            aria-label="arrow-forward"
-            size='large'>
-            <ArrowForward />
-          </IconButton>
-        </div>
+        {renderTextField(false)}
       </div>
     </div>
   );

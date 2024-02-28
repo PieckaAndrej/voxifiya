@@ -1,12 +1,11 @@
 $column-gap: 10px;
+$scrollbar-width: 10px;
 
 .WordInputPage {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   width: 100%;
-  height: 50%;
-  padding-bottom: 24px;
 }
 
 .inputRow {
@@ -15,11 +14,18 @@ $column-gap: 10px;
   column-gap: $column-gap;
   padding-right: $column-gap;
   grid-template-columns: 50% 50%;
+  margin-bottom: 50vh;
+}
+
+.floatingInput {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  max-width: 600px;
-  transform: translate(-50%, -50%);
+  bottom: 10px;
+  margin: 0;
+  right: calc($scrollbar-width / 2);
+}
+
+.hiddenInput {
+  opacity: 0;
 }
 
 .scroll {
@@ -46,7 +52,7 @@ $column-gap: 10px;
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: $scrollbar-width;
 }
 
 /* Track */
