@@ -22,9 +22,14 @@ $column-gap: 10px;
   transform: translate(-50%, -50%);
 }
 
-.words {
+.scroll {
   overflow-y: auto;
+}
+
+.sentences {
   align-items: center;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .input {
@@ -32,6 +37,11 @@ $column-gap: 10px;
     font-size: 2rem;
     text-align: right;
   }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
 }
 
 /* width */

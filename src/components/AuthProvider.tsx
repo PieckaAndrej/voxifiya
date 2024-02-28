@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (!csrfToken) {
       setCsrfToken(Cookies.get('X-CSRF-Token'));
     }
-    
+
     getMe()
       .then((response) => {
         setUser(response.data);

@@ -1,14 +1,19 @@
 import { ArrowForward } from '@mui/icons-material';
-import { IconButton, TextField } from '@mui/material';
+import { CircularProgress, IconButton, TextField } from '@mui/material';
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import styles from './WordInputPage.module.scss';
-import WordRow from './components/WordRow/WordRow';
-import { Word } from '../../models/word';
+import SentenceRow from './components/SentenceRow/SentenceRow';
+import { Sentence } from '../../models/sentence';
+import { getSentences } from '../../services/sentenceService';
+import { useAuth } from '../../hooks/useAuth';
+import InfiniteScroll from 'react-infinite-scroller';
+import { Page } from '../../models/page';
 
 interface WordInputPageProps { }
 
 const WordInputPage: FC<WordInputPageProps> = () => {
-  const [words, setWords] = useState<Word[]>([]);
+  const auth = useAuth();
+  const [sentences, setSentences] = useState<Page<Sentence>>();
 
   const [inputValue, setInputValue] = useState<string>('');
 
@@ -16,7 +21,6 @@ const WordInputPage: FC<WordInputPageProps> = () => {
 
   const onNewWordClick = useCallback(() => {
     if (inputValue.length > 0) {
-      setWords(prevWords => [...prevWords, { text: inputValue }]);
       setInputValue('');
     }
   }, [inputValue]);
@@ -24,7 +28,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
   useEffect(() => {
     const keydownHandler = (e: KeyboardEvent) => {
       if (e.key === 'Enter') onNewWordClick();
-    }
+    };
 
     document.addEventListener('keydown', keydownHandler);
 
@@ -35,25 +39,66 @@ const WordInputPage: FC<WordInputPageProps> = () => {
 
   useEffect(() => {
     wordsEnd?.scrollIntoView();
-  }, [words, wordsEnd]);
+  }, [sentences, wordsEnd]);
+
+  const loadSentences = () => {
+    getSentences(auth?.user?.defaultLanguage ?? '',
+      sentences?.items[sentences.items.length - 1].createdDate, 2)
+
+      .then((response) => {
+
+        setSentences(prevSentences => {
+          let items = prevSentences?.items ?? [];
+
+          if (prevSentences?.items[prevSentences.items.length - 1].id !==
+            response.data.items[response.data.items.length - 1].id) {
+
+            items = prevSentences?.items ?
+              prevSentences?.items.concat(response.data.items) :
+              response.data.items;
+          }
+
+          return {
+            ...response.data,
+            items
+          };
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const onTextChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
-  }
+  };
 
-  const renderWords = () => {
-    return words.map((word, id) => {
-      return <WordRow word={word} key={id} />;
+  const renderSentences = () => {
+    return sentences?.items.map((sentence, id) => {
+      return <SentenceRow sentence={sentence} key={id} />;
     });
-  }
+  };
 
   return (
     <div className={styles.WordInputPage} data-testid='WordInputPage'>
-      <div className={styles.words}>
-        {renderWords()}
-        <div style={{ float:'left', clear: 'both' }}
-             ref={(el) => { wordsEnd = el; }}>
-        </div>
+      <div className={styles.scroll}>
+        <InfiniteScroll
+            loadMore={loadSentences}
+            hasMore={sentences?.hasNextPage ?? true}
+            initialLoad={true}
+            isReverse={true}
+            loader={
+              <div className={styles.loading} key={0}>
+                <CircularProgress />
+              </div>
+            }>
+          <div className={styles.sentences}>
+            <div style={{ float:'left', clear: 'both' }}
+                ref={(el) => { wordsEnd = el; }}>
+            </div>
+            {renderSentences()}
+          </div>
+        </InfiniteScroll>
       </div>
       <div className={styles.inputRow}>
         <TextField

@@ -15,7 +15,7 @@ export const postLogin = (user: string, password: string) => {
 
 export const postLogout = () => {
   return instance.post('logout');
-}
+};
 
 export const getSession = () => {
   return instance.get('session');

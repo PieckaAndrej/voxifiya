@@ -46,8 +46,8 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
   }, [backgroundConfig, background]);
 
   return (
-    <div className={styles.GradientBackground} 
-      style={{ backgroundColor: background?.color }} 
+    <div className={styles.GradientBackground}
+      style={{ backgroundColor: background?.color }}
       data-testid="GradientBackground">
       {renderGradients()}
     </div>

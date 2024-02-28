@@ -1,5 +1,5 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Alert, Button, FilledInput, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, Link } from '@mui/material';
+import { Alert, Button, FilledInput, FormControl, IconButton, InputAdornment, InputLabel, Link } from '@mui/material';
 import { AxiosError } from 'axios';
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -53,17 +53,17 @@ const LoginPage: FC<LoginPageProps> = () => {
       })
       .finally(() => {
         setSubmitDisabled(false);
-      })
+      });
   };
 
   return (
     <div className={styles.LoginPage} data-testid="LoginPage">
       <span className={styles.header}>Login</span>
       {
-        error && 
-        <Alert severity='error' variant='filled' 
-          className={styles.alert} 
-          onClose={() => {setError('')}}>
+        error &&
+        <Alert severity='error' variant='filled'
+          className={styles.alert}
+          onClose={() => {setError('');}}>
           {error}
         </Alert>
       }

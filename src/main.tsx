@@ -5,7 +5,7 @@ import {
   BrowserRouter
 } from 'react-router-dom';
 import App from './App.tsx';
-import './index.css';
+import './index.scss';
 import theme from './theme.ts';
 import { AuthProvider } from './components/AuthProvider.tsx';
 

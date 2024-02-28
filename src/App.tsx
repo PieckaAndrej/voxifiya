@@ -1,9 +1,11 @@
+import { Box, CircularProgress } from '@mui/material';
 import { FC } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import styles from './App.module.scss';
 import GradientBackground from './components/GradientBackground/GradientBackground';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import Sidenav from './components/Sidenav/Sidenav';
+import UserMenu from './components/UserMenu/UserMenu';
 import { useAuth } from './hooks/useAuth';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import HomePage from './pages/HomePage/HomePage';
@@ -20,34 +22,47 @@ const App: FC = () => {
         <GradientBackground />
         <div className={styles.noise}></div>
       </div>
-      {auth?.user && <Sidenav />}
+      {
+        auth?.user &&
+        <>
+          <Sidenav />
+          <div className={styles.menu}>
+            <UserMenu />
+          </div>
+        </>
+      }
       <div className={styles.container}>
         {
-          !auth?.loading &&
-          <Routes>
-            <Route path="*" element={<ErrorPage />} />
-            <Route
-              path="words"
-              element={
-                <ProtectedRoute>
-                  <WordInputPage />
-                </ProtectedRoute>
+          !auth?.loading ? (
+            <Routes>
+              <Route path="*" element={<ErrorPage />} />
+              <Route
+                path="words"
+                element={
+                  <ProtectedRoute>
+                    <WordInputPage />
+                  </ProtectedRoute>
+                }
+              />
+              {
+                auth?.user ? (
+                  <>
+                    <Route path="/" element={<Navigate to={'/words'} />} />
+                    <Route path="login" element={<Navigate to={'/'} />} />
+                  </>
+                ) : (
+                  <>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="login" element={<LoginPage />} />
+                  </>
+                )
               }
-            />
-            {
-              auth?.user ? (
-                <>
-                  <Route path="/" element={<Navigate to={'/words'} />} />
-                  <Route path="login" element={<Navigate to={'/'} />} />
-                </>
-              ) : (
-                <>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="login" element={<LoginPage />} />
-                </>
-              )
-            }
-          </Routes>
+            </Routes>
+          ) : (
+            <Box display='flex' alignItems='center' width='100%' justifyContent='center'>
+              <CircularProgress sx={{width: '70px', height: '70px'}} />
+            </Box>
+          )
         }
       </div>
     </div>

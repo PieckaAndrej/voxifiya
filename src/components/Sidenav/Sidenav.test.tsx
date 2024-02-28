@@ -6,7 +6,7 @@ import Sidenav from './Sidenav';
 describe('<Sidenav />', () => {
   test('it should mount', () => {
     render(<Sidenav />);
-    
+
     const sidenav = screen.getByTestId('Sidenav');
 
     expect(sidenav).toBeInTheDocument();

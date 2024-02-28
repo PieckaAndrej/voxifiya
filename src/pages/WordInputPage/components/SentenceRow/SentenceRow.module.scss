@@ -1,6 +1,6 @@
 $column-gap: 10px;
 
-.WordRow {
+.SentenceRow {
   display: grid;
   column-gap: $column-gap;
   padding-right: $column-gap;
@@ -17,4 +17,11 @@ $column-gap: 10px;
 .translation {
   color: rgba($color: #fff, $alpha: 0.6);
   text-align: left;
+}
+
+.text,
+.translation {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

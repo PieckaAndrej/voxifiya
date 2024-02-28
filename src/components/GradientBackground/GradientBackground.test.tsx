@@ -6,7 +6,7 @@ import GradientBackground from './GradientBackground';
 describe('<GradientBackground />', () => {
   test('it should mount', () => {
     render(<GradientBackground />);
-    
+
     const gradientBackground = screen.getByTestId('GradientBackground');
 
     expect(gradientBackground).toBeInTheDocument();
