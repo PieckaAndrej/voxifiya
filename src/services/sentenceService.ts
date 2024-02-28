@@ -9,6 +9,13 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+export const postSentence = (sentence: Sentence) => {
+  return instance.post<Sentence>('', {
+    language: sentence.language,
+    requestText: sentence.requestText
+  });
+};
+
 export const getSentences = (language: string, pageCursor?: Date, pageSize: number = 20) => {
   return instance.get<Page<Sentence>>('', {
     params: {

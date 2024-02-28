@@ -1,10 +1,10 @@
 import { ArrowForward } from '@mui/icons-material';
 import { CircularProgress, IconButton, TextField } from '@mui/material';
-import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './WordInputPage.module.scss';
 import SentenceRow from './components/SentenceRow/SentenceRow';
 import { Sentence } from '../../models/sentence';
-import { getSentences } from '../../services/sentenceService';
+import { getSentences, postSentence } from '../../services/sentenceService';
 import { useAuth } from '../../hooks/useAuth';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Page } from '../../models/page';
@@ -13,17 +13,43 @@ interface WordInputPageProps { }
 
 const WordInputPage: FC<WordInputPageProps> = () => {
   const auth = useAuth();
-  const [sentences, setSentences] = useState<Page<Sentence>>();
+  const [sentences, setSentences] = useState<Page<Sentence>>({
+    items: []
+  });
 
   const [inputValue, setInputValue] = useState<string>('');
+  const [scroll, setScroll] = useState<boolean>(false);
 
-  let wordsEnd: HTMLDivElement | null = null;
+  let wordsEndRef = useRef<HTMLDivElement>(null);
 
   const onNewWordClick = useCallback(() => {
-    if (inputValue.length > 0) {
+    if (inputValue.length > 1) {
       setInputValue('');
+
+      postSentence({ requestText: inputValue, language: auth?.user?.defaultLanguage ?? '' })
+        .then((response) => {
+          setSentences(prevSentences => {
+            return {
+              ...prevSentences,
+              items: [response.data, ...prevSentences.items]
+            };
+          });
+
+          setScroll(true);
+
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  }, [inputValue]);
+  }, [inputValue, auth, setSentences, setScroll]);
+
+  useEffect(() => {
+    if (scroll) {
+      wordsEndRef?.current?.scrollIntoView({behavior: 'smooth'});
+      setScroll(false);
+    }
+  }, [scroll, sentences, setScroll])
 
   useEffect(() => {
     const keydownHandler = (e: KeyboardEvent) => {
@@ -37,24 +63,20 @@ const WordInputPage: FC<WordInputPageProps> = () => {
     };
   }, [inputValue, onNewWordClick]);
 
-  useEffect(() => {
-    wordsEnd?.scrollIntoView();
-  }, [sentences, wordsEnd]);
-
   const loadSentences = () => {
     getSentences(auth?.user?.defaultLanguage ?? '',
-      sentences?.items[sentences.items.length - 1].createdDate, 2)
+      sentences.items[sentences.items.length - 1]?.createdDate)
 
       .then((response) => {
 
         setSentences(prevSentences => {
-          let items = prevSentences?.items ?? [];
+          let items = prevSentences.items;
 
-          if (prevSentences?.items[prevSentences.items.length - 1].id !==
-            response.data.items[response.data.items.length - 1].id) {
+          if (prevSentences.items[prevSentences.items.length - 1]?.id !==
+            response.data.items[response.data.items.length - 1]?.id) {
 
             items = prevSentences?.items ?
-              prevSentences?.items.concat(response.data.items) :
+              prevSentences.items.concat(response.data.items) :
               response.data.items;
           }
 
@@ -87,18 +109,19 @@ const WordInputPage: FC<WordInputPageProps> = () => {
             hasMore={sentences?.hasNextPage ?? true}
             initialLoad={true}
             isReverse={true}
+            useWindow={false}
             loader={
               <div className={styles.loading} key={0}>
                 <CircularProgress />
               </div>
             }>
           <div className={styles.sentences}>
-            <div style={{ float:'left', clear: 'both' }}
-                ref={(el) => { wordsEnd = el; }}>
-            </div>
             {renderSentences()}
           </div>
         </InfiniteScroll>
+        <div style={{ float:'left', clear: 'both' }}
+            ref={wordsEndRef}>
+        </div>
       </div>
       <div className={styles.inputRow}>
         <TextField

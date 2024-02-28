@@ -1,7 +1,8 @@
 export interface Sentence {
-  id: string;
+  id?: string;
   customTranslation?: string;
-  translatedText: string;
+  translatedText?: string;
   requestText: string;
-  createdDate: Date;
+  createdDate?: Date;
+  language: string;
 }
