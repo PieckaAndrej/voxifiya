@@ -11,6 +11,7 @@ import ErrorPage from './pages/ErrorPage/ErrorPage';
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import WordInputPage from './pages/WordInputPage/WordInputPage';
+import QuizPage from './pages/QuizPage/QuizPage';
 
 
 const App: FC = () => {
@@ -41,6 +42,14 @@ const App: FC = () => {
                 element={
                   <ProtectedRoute>
                     <WordInputPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="quiz"
+                element={
+                  <ProtectedRoute>
+                    <QuizPage />
                   </ProtectedRoute>
                 }
               />

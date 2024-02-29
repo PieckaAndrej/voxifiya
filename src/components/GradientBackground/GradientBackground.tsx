@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './GradientBackground.module.scss';
 import { useLocation } from 'react-router-dom';
+import { customColors } from '../../theme';
 
 interface GradientBackgroundProps {}
 
@@ -16,12 +17,16 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
   const backgroundConfig: { [key: string]: BackgroundGradient } = useMemo(() => {
     return {
       login: {
-        color: '#090a2b',
+        color: customColors.loginGradient.bg,
         className: styles.loginGradient
       },
       words: {
-        color: '#0c0b43',
+        color: customColors.wordsGradient.bg,
         className: styles.wordsGradient
+      },
+      quiz: {
+        color: customColors.quizGradient.bg,
+        className: styles.quizGradient
       },
     };
   }, []);
@@ -33,6 +38,9 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
         break;
       case '/login':
         setBackground(backgroundConfig.login);
+        break;
+      case '/quiz':
+        setBackground(backgroundConfig.quiz);
         break;
     }
   }, [location, background, backgroundConfig]);

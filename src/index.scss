@@ -1,3 +1,14 @@
+$login-gradient-bg: #090a2b;
+$login-gradient-fg: #0b5250;
+
+$words-gradient-bg: #0c0b43;
+$words-gradient-fg: #3d2525;
+
+$quiz-gradient-bg: #16010b;
+$quiz-gradient-fg: #141e46;
+
+$scrollbar-width: 10px;
+
 :root {
   line-height: 1.5;
   font-weight: 400;
@@ -6,11 +17,30 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  --primary-fg-color: #d0d2db;
 }
 
 .MuiPopover-paper {
   background-color: rgba($color: white, $alpha: 0.1) !important;
   background-image: none;
+}
+
+::-webkit-scrollbar {
+  width: $scrollbar-width;
+  height: $scrollbar-width;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: rgba($color: white, $alpha: 0.2); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba($color: white, $alpha: 0.4); 
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
