@@ -10,7 +10,7 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
   return (
     <div className={styles.SentenceRow} data-testid="SentenceRow">
       <span className={styles.text}>
-        {props.sentence.requestText}
+        {props.sentence.text}
       </span>
       <span className={styles.translation}>
         {props.sentence.translatedText}

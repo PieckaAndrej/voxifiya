@@ -42,7 +42,7 @@ const LoginPage: FC<LoginPageProps> = () => {
 
     postLogin(formValues.user, formValues.password)
       .then(() => {
-        auth?.login('/words');
+        auth?.login();
       })
       .catch((error: AxiosError) => {
         if (error.response?.status === 401) {

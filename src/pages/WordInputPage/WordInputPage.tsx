@@ -33,7 +33,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
     if (inputValue.length > 1) {
       setInputValue('');
 
-      postSentence({ requestText: inputValue, language: auth?.user?.defaultLanguage ?? '' })
+      postSentence({ text: inputValue, language: auth?.user?.defaultLanguage ?? '' })
         .then((response) => {
           setSentences(prevSentences => {
             return {

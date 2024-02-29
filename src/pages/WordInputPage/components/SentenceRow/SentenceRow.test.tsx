@@ -7,7 +7,7 @@ describe('<SentenceRow />', () => {
   test('it should mount', () => {
     render(<SentenceRow sentence={{
       createdDate: new Date(),
-      requestText: 'hel',
+      text: 'hel',
       translatedText: 'hello',
       id: ''
     }}/>);

@@ -12,7 +12,7 @@ const instance = axios.create({
 export const postSentence = (sentence: Sentence) => {
   return instance.post<Sentence>('', {
     language: sentence.language,
-    requestText: sentence.requestText
+    text: sentence.text
   });
 };
 
