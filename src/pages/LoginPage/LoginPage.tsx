@@ -58,6 +58,7 @@ const LoginPage: FC<LoginPageProps> = () => {
 
   return (
     <div className={styles.LoginPage} data-testid="LoginPage">
+      <img className={styles.logo} alt='logo' src='logo.svg'></img>
       <span className={styles.header}>Login</span>
       {
         error &&

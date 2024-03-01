@@ -2,6 +2,8 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './GradientBackground.module.scss';
 import { useLocation } from 'react-router-dom';
 import { customColors } from '../../theme';
+import { useGradient } from '../../hooks/useGradient';
+import { Answer } from '../../models/enums/answer';
 
 interface GradientBackgroundProps {}
 
@@ -13,6 +15,7 @@ interface BackgroundGradient {
 const GradientBackground: FC<GradientBackgroundProps> = () => {
   const [background, setBackground] = useState<BackgroundGradient>();
   const location = useLocation();
+  const gradient = useGradient();
 
   const backgroundConfig: { [key: string]: BackgroundGradient } = useMemo(() => {
     return {
@@ -58,6 +61,25 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
       style={{ backgroundColor: background?.color }}
       data-testid="GradientBackground">
       {renderGradients()}
+      {
+        gradient?.answer === Answer.CORRECT &&
+        <div key={gradient.countKey}>
+          <div className={[styles.answerGradient, styles.correctGradientBackground].join(' ')}></div>
+          <div className={[styles.answerGradient, styles.correctGradient].join(' ')}></div>
+          <div className={[styles.answerGradient, styles.correctGradientHighlight].join(' ')}></div>
+          <div className={[styles.answerGradient, styles.correctGradientHighlight2].join(' ')}></div>
+        </div>
+      }
+      {
+        gradient?.answer === Answer.WRONG &&
+        <div key={gradient.countKey}>
+          <div className={[styles.answerGradient, styles.wrongGradientBackground].join(' ')}></div>
+          <div className={[styles.answerGradient, styles.wrongGradient].join(' ')}></div>
+          <div className={[styles.answerGradient, styles.wrongGradientHighlight].join(' ')}></div>
+          <div className={[styles.answerGradient, styles.wrongGradientHighlight2].join(' ')}></div>
+          <div className={[styles.answerGradient, styles.wrongGradientHighlight3].join(' ')}></div>
+        </div>
+      }
     </div>
   );
 };

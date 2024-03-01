@@ -65,6 +65,7 @@ const Sidenav: FC<SidenavProps> = () => {
     <div className={styles.Sidenav} data-testid='Sidenav'>
       {renderBackground()}
       {renderTabs()}
+      <img className={styles.logo} src='shape-logo.svg' />
     </div>
   );
 };

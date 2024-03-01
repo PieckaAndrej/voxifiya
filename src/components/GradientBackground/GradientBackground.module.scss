@@ -1,5 +1,14 @@
 @import "src/index";
 
+$wrongAnswer-gradient-fg: #320a0a;
+$wrongAnswer-gradient-bg: #2e0c0c;
+$wrongAnswer-gradient-highlight: rgba(#c0b3b3, 0.05);
+
+$correctAnswer-gradient-fg: #093f19;
+$correctAnswer-gradient-bg: rgba(#012e2b, 0.7);
+$correctAnswer-gradient-highlight: rgba(#b5c0b3, 0.05);
+
+
 .GradientBackground {
   transition-property: background-color;
   transition-duration: 3s;
@@ -20,6 +29,55 @@
   background-image: radial-gradient(circle at 30% 70%, $quiz-gradient-fg, transparent);
 }
 
+.wrongGradient {
+  background-image: radial-gradient(circle at 50% 30%, $wrongAnswer-gradient-fg, transparent);
+  animation-delay: 0.1s;
+}
+
+.wrongGradientBackground {
+  background-image: radial-gradient(circle at 10% 90%, $wrongAnswer-gradient-bg, transparent);
+}
+
+.wrongGradientHighlight {
+  background-image: radial-gradient(circle at 10% 70%, $wrongAnswer-gradient-highlight 2%, transparent 3%);
+}
+
+.wrongGradientHighlight2 {
+  background-image: radial-gradient(circle at 15% 85%, $wrongAnswer-gradient-highlight 1%, transparent 2%);
+  animation-delay: 0.1s;
+}
+
+.wrongGradientHighlight3 {
+  background-image: radial-gradient(circle at 27% 78%, $wrongAnswer-gradient-highlight 2%, transparent 3%);
+  animation-delay: 0.2s;
+}
+
+.correctGradient {
+  background-image: radial-gradient(circle at 40% 30%, $correctAnswer-gradient-fg, transparent);
+  animation-delay: 0.1s;
+}
+
+.correctGradientBackground {
+  background-image: radial-gradient(circle at 10% 90%, $correctAnswer-gradient-bg, transparent);
+}
+
+.correctGradientHighlight {
+  background-image: radial-gradient(circle at 90% 60%, $correctAnswer-gradient-highlight 2%, transparent 3%);
+  animation-delay: 0.3s;
+}
+
+.correctGradientHighlight2 {
+  background-image: radial-gradient(circle at 75% 80%, $correctAnswer-gradient-highlight 1%, transparent 2%);
+  animation-delay: 0.2s;
+}
+
+.answerGradient {
+  animation-name: answer;
+  animation-duration: 1s;
+  opacity: 0;
+}
+
+.answerGradient,
 .gradient {
   width: 100%;
   height: 100%;
@@ -28,4 +86,16 @@
   left: 0;
   transition-property: opacity;
   transition-duration: 3s;
+}
+
+@keyframes answer {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+  }
 }

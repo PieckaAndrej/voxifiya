@@ -8,6 +8,7 @@ import App from './App.tsx';
 import { AuthProvider } from './components/AuthProvider.tsx';
 import './index.scss';
 import theme from './theme.ts';
+import { GradientProvider } from './components/GradientProvider.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <CssBaseline />
       <BrowserRouter>
         <AuthProvider>
-          <App />
+          <GradientProvider>
+            <App />
+          </GradientProvider>
         </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>
