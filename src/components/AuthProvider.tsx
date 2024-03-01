@@ -85,6 +85,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         value?.logout();
       }
     } else if (!value?.user && csrfToken) {
+      setCsrfToken(Cookies.get('X-CSRF-Token'));
       value?.login();
     }
   }, [value, csrfToken, setCsrfToken, setLoading]);
