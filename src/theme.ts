@@ -30,6 +30,6 @@ export const customColors = {
     bg: '#16010b',
     fg: '#141e46'
   },
-}
+};
 
 export default theme;

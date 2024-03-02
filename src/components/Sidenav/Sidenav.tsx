@@ -33,33 +33,37 @@ const Sidenav: FC<SidenavProps> = () => {
         path: '/quiz',
         backgroundStyle: styles.quizGradient
       }
-    ]
+    ];
   }, []);
 
   useEffect(() => {
     setSelectedTab(tabs.find(tab => tab.path === location.pathname));
-  }, [location, setSelectedTab]);
+  }, [location, tabs, setSelectedTab]);
 
   const renderTabs = () => {
     return tabs.map((tab, index) => {
-      return <Link component={RouterLink} to={tab.path} key={index}
-        sx={{ textDecoration: 'none' }} className={styles.link}>
-        <Button sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-          <div className={tab === selectedTab ? styles.selectedIcon : styles.icon}>{tab.icon}</div>
-          <div className={styles.linkText}>{tab.text}</div>
-        </Button>
-      </Link>
-    })
-  }
+      return (
+        <Link component={RouterLink} to={tab.path} key={index}
+          sx={{ textDecoration: 'none' }} className={styles.link}>
+          <Button sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+            <div className={tab === selectedTab ? styles.selectedIcon : styles.icon}>{tab.icon}</div>
+            <div className={styles.linkText}>{tab.text}</div>
+          </Button>
+        </Link>
+      );
+    });
+  };
 
   const renderBackground = () => {
     return tabs.map((tab, index) => {
-      return <div key={index} 
+      return (
+        <div key={index}
           className={[styles.background, tab?.backgroundStyle].join(' ')}
-          style={{opacity: tab === selectedTab ? '1' : '0'}}>
+          style={{ opacity: tab === selectedTab ? '1' : '0' }}>
         </div>
-    })
-  }
+      );
+    });
+  };
 
   return (
     <div className={styles.Sidenav} data-testid='Sidenav'>

@@ -8,7 +8,7 @@ import { getSession, postLogout } from '../services/authService';
 
 export interface Auth {
   user?: User;
-  loading: boolean,
+  loading: boolean;
   login: (navigatePath?: string) => void;
   logout: (navigatePath?: string) => void;
 }

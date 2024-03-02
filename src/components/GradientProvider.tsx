@@ -16,12 +16,12 @@ export const GradientProvider = ({ children }: { children: ReactNode }) => {
   const changeAnswer = useCallback((newAnswer: Answer) => {
     setAnswer(newAnswer);
     setCount(prevCount => prevCount + 1);
-  }, [setAnswer, setCount])
+  }, [setAnswer, setCount]);
 
   const value = useMemo<Gradient>(() => ({
     answer,
     countKey: count,
-    setAnswer: changeAnswer 
+    setAnswer: changeAnswer
   }), [answer, count, changeAnswer]);
 
   return <GradientContext.Provider value={value}>{children}</GradientContext.Provider>;

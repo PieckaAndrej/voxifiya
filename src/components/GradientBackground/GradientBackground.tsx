@@ -62,7 +62,7 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
       data-testid="GradientBackground">
       {renderGradients()}
       {
-        gradient?.answer === Answer.CORRECT &&
+        gradient?.answer === Answer.Correct &&
         <div key={gradient.countKey}>
           <div className={[styles.answerGradient, styles.correctGradientBackground].join(' ')}></div>
           <div className={[styles.answerGradient, styles.correctGradient].join(' ')}></div>
@@ -71,7 +71,7 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
         </div>
       }
       {
-        gradient?.answer === Answer.WRONG &&
+        gradient?.answer === Answer.Wrong &&
         <div key={gradient.countKey}>
           <div className={[styles.answerGradient, styles.wrongGradientBackground].join(' ')}></div>
           <div className={[styles.answerGradient, styles.wrongGradient].join(' ')}></div>
