@@ -26,6 +26,12 @@ export const getSentences = (language: string, pageCursor?: Date, pageSize: numb
   });
 };
 
+export const patchSentence = (id: string, customTranslation: string | undefined) => {
+  return instance.patch<Sentence>(id, {
+    customTranslation
+  });
+}
+
 export const getLanguages = () => {
   return instance.get<Language[]>('languages');
 };

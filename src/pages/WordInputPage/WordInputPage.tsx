@@ -1,6 +1,6 @@
 import { ArrowForward } from '@mui/icons-material';
 import { CircularProgress, IconButton, TextField } from '@mui/material';
-import { ChangeEvent, FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useAuth } from '../../hooks/useAuth';
 import { Page } from '../../models/page';
@@ -16,6 +16,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
   const [sentences, setSentences] = useState<Page<Sentence>>({
     items: []
   });
+  const [editing, setEditing] = useState<Sentence | null>(null);
 
   const [inputValue, setInputValue] = useState<string>('');
   const [scroll, setScroll] = useState<boolean>(false);
@@ -25,9 +26,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
   const textInputRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const textInputMarginTop = useMemo(() => {
-    return 10;
-  }, []);
+  const textInputMarginTop = 10;
 
   const onNewWordClick = useCallback(() => {
     if (inputValue.length > 1) {
@@ -104,9 +103,24 @@ const WordInputPage: FC<WordInputPageProps> = () => {
     setInputValue(e.target.value);
   };
 
+  const onUpdateSentence = (sentence: Sentence) => {
+    setSentences(prevSentences => {
+      const index = prevSentences.items.findIndex(s => s.id === sentence.id);
+      prevSentences.items[index] = sentence;
+
+      return {...prevSentences};
+    });
+  };
+
   const renderSentences = () => {
     return sentences?.items.map((sentence, id) => {
-      return <SentenceRow sentence={sentence} key={id} />;
+      return (
+        <SentenceRow sentence={sentence}
+          key={id}
+          editing={editing === sentence}
+          updateSentence={onUpdateSentence}
+          setEditing={(editing) => setEditing(editing ? sentence : null)}/>
+      );
     });
   };
 

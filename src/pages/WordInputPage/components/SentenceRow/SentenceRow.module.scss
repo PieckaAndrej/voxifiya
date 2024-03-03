@@ -14,9 +14,19 @@ $column-gap: 10px;
   text-align: right;
 }
 
+.input {
+  input {
+    font-size: 1.7rem;
+  }
+}
+
 .translation {
   color: rgba($color: #fff, $alpha: 0.6);
   text-align: left;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
 }
 
 .text,

@@ -40,16 +40,12 @@ $correctAnswer-gradient-highlight: rgba(#b5c0b3, 0.05);
 
 .wrongGradientHighlight {
   background-image: radial-gradient(circle at 10% 70%, $wrongAnswer-gradient-highlight 2%, transparent 3%);
+  animation-delay: 0.1s;
 }
 
 .wrongGradientHighlight2 {
   background-image: radial-gradient(circle at 15% 85%, $wrongAnswer-gradient-highlight 1%, transparent 2%);
-  animation-delay: 0.1s;
-}
-
-.wrongGradientHighlight3 {
-  background-image: radial-gradient(circle at 27% 78%, $wrongAnswer-gradient-highlight 2%, transparent 3%);
-  animation-delay: 0.2s;
+  animation-delay: 0.3s;
 }
 
 .correctGradient {
@@ -73,7 +69,7 @@ $correctAnswer-gradient-highlight: rgba(#b5c0b3, 0.05);
 
 .answerGradient {
   animation-name: answer;
-  animation-duration: 1s;
+  animation-duration: 3s;
   opacity: 0;
 }
 
@@ -92,7 +88,7 @@ $correctAnswer-gradient-highlight: rgba(#b5c0b3, 0.05);
   0% {
     opacity: 0;
   }
-  20% {
+  5% {
     opacity: 0.4;
   }
   100% {

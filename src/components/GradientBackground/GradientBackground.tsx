@@ -77,7 +77,6 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
           <div className={[styles.answerGradient, styles.wrongGradient].join(' ')}></div>
           <div className={[styles.answerGradient, styles.wrongGradientHighlight].join(' ')}></div>
           <div className={[styles.answerGradient, styles.wrongGradientHighlight2].join(' ')}></div>
-          <div className={[styles.answerGradient, styles.wrongGradientHighlight3].join(' ')}></div>
         </div>
       }
     </div>

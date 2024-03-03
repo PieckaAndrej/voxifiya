@@ -23,5 +23,5 @@ export const postQuiz = (quiz: QuizAnswer) => {
     id: quiz.id,
     userSentenceId: quiz.userSentenceId,
     answer: quiz.answer
-  })
-}
+  });
+};

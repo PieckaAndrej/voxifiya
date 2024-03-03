@@ -37,7 +37,7 @@ const QuizPage: FC<QuizPageProps> = () => {
       userSentenceId: quizQuestions[0].userSentenceId,
       id: quizQuestions[0].id,
       answer,
-    })
+    });
   };
 
   const onNextQuestion = () => {

@@ -29,7 +29,7 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
   const onAnswerClick = useCallback((id: string) => {
     props.onAnswer(id === props.question.userSentenceId ? Answer.Correct : Answer.Wrong);
     setAnswered(id);
-  }, [props.question.userSentenceId, setAnswered]);
+  }, [props, setAnswered]);
 
   const getAnsweredColor = useCallback((id: string) => {
     if (answered) {

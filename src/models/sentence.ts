@@ -1,6 +1,6 @@
 export interface Sentence {
   id?: string;
-  customTranslation?: string;
+  customTranslation?: boolean;
   translatedText?: string;
   text: string;
   createdDate?: Date;
