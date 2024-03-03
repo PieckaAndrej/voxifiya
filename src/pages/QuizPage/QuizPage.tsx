@@ -5,7 +5,7 @@ import { useGradient } from '../../hooks/useGradient';
 import { Answer } from '../../models/enums/answer';
 import { QuizType } from '../../models/enums/quizType';
 import { QuizQuestion } from '../../models/quiz';
-import { GetQuiz } from '../../services/quizService';
+import { getQuiz, postQuiz } from '../../services/quizService';
 import styles from './QuizPage.module.scss';
 import MultiChoiceQuestion from './components/MultiChoiceQuestion/MultiChoiceQuestion';
 
@@ -17,26 +17,45 @@ const QuizPage: FC<QuizPageProps> = () => {
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
 
   useEffect(() => {
-    GetQuiz(auth?.user?.defaultLanguage ?? '', QuizType.GuessForeign)
-      .then((response) => {
-        setQuizQuestions(prevQuizQuestions => {
-          return [...prevQuizQuestions, ...response.data];
+    if (quizQuestions.length <= 1) {
+      getQuiz(auth?.user?.defaultLanguage ?? '', QuizType.GuessForeign)
+        .then((response) => {
+          setQuizQuestions(prevQuizQuestions => {
+            return [...prevQuizQuestions, ...response.data];
+          });
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [auth, setQuizQuestions]);
+    }
+  }, [auth, quizQuestions, setQuizQuestions]);
 
   const onAnswer = (answer: Answer) => {
     gradient?.setAnswer(answer);
+
+    postQuiz({
+      userSentenceId: quizQuestions[0].userSentenceId,
+      id: quizQuestions[0].id,
+      answer,
+    })
+  };
+
+  const onNextQuestion = () => {
+    setQuizQuestions(prevQuizQuestions => {
+      prevQuizQuestions.shift();
+
+      return [...prevQuizQuestions];
+    });
   };
 
   const renderQuestion = () => {
     switch (quizQuestions[0].type) {
       case QuizType.GuessForeign:
         return (
-          <MultiChoiceQuestion question={quizQuestions[0]} onAnswer={onAnswer} />
+          <MultiChoiceQuestion
+            question={quizQuestions[0]}
+            onNextQuestion={onNextQuestion}
+            onAnswer={onAnswer} />
         );
     }
   };

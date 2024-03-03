@@ -1,21 +1,20 @@
-import React, { FC, useCallback } from 'react';
-import styles from './MultiChoiceQuestion.module.scss';
-import { QuizQuestion } from '../../../../models/quiz';
-import { Answer } from '../../../../models/enums/answer';
 import { Button } from '@mui/material';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { Answer } from '../../../../models/enums/answer';
+import { QuizQuestion, WrongAnswer } from '../../../../models/quiz';
+import styles from './MultiChoiceQuestion.module.scss';
 
 interface MultiChoiceQuestionProps {
   question: QuizQuestion;
   onAnswer: (answer: Answer) => void;
+  onNextQuestion: () => void;
 }
 
 const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
+  const [answers, setAnswers] = useState<WrongAnswer[]>([]);
+  const [answered, setAnswered] = useState<string | null>(null);
 
-  const onAnswerClick = useCallback((id: string) => {
-    props.onAnswer(id === props.question.userSentenceId ? Answer.Correct : Answer.Wrong);
-  }, [props]);
-
-  const renderAnswers = useCallback(() => {
+  useEffect(() => {
     const answers = [...props.question.wrongAnswers, {
       answer: props.question.correctAnswer,
       userSentenceId: props.question.userSentenceId
@@ -23,18 +22,41 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
 
     answers.sort(() => Math.random() - 0.5);
 
-    return answers.map((wa, index) => {
+    setAnswers(answers);
+    setAnswered(null);
+  }, [props.question, setAnswers, setAnswered]);
+
+  const onAnswerClick = useCallback((id: string) => {
+    props.onAnswer(id === props.question.userSentenceId ? Answer.Correct : Answer.Wrong);
+    setAnswered(id);
+  }, [props.question.userSentenceId, setAnswered]);
+
+  const getAnsweredColor = useCallback((id: string) => {
+    if (answered) {
+      if (id === props.question.userSentenceId) {
+        return 'success';
+      } else if (id === answered) {
+        return 'error';
+      }
+    }
+
+    return 'primary';
+  }, [answered, props.question.userSentenceId]);
+
+  const renderAnswers = useCallback(() => {
+    return answers.map((a, index) => {
       return (
         <Button key={index}
-          onClick={() => onAnswerClick(wa.userSentenceId)}
+          onClick={() => onAnswerClick(a.userSentenceId)}
           variant='outlined'
-          size='large'
-          sx={{width: '100%'}}>
-          {wa.answer}
+          color={getAnsweredColor(a.userSentenceId)}
+          sx={{ width: '100%' }}
+          size='large'>
+          {a.answer}
         </Button>
       );
     });
-  }, [props.question, onAnswerClick]);
+  }, [answers, onAnswerClick, getAnsweredColor]);
 
   return (
     <div className={styles.MultiChoiceQuestion} data-testid="MultiChoiceQuestion">
@@ -42,6 +64,10 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
       <div className={styles.answers}>
         {renderAnswers()}
       </div>
+      {
+        !!answered &&
+        <div className={styles.nextQuestion} onClick={() => props.onNextQuestion()}></div>
+      }
     </div>
   );
 };

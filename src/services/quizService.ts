@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { environment } from '../environment';
 import { QuizType } from '../models/enums/quizType';
-import { QuizQuestion } from '../models/quiz';
+import { QuizAnswer, QuizQuestion } from '../models/quiz';
 
 const instance = axios.create({
   baseURL: `${environment.backendUrl}/api/quiz/`,
   withCredentials: true,
 });
 
-export const GetQuiz = (language: string, type: QuizType, noOfQuestions: number = 5) => {
+export const getQuiz = (language: string, type: QuizType, noOfQuestions: number = 5) => {
   return instance.get<QuizQuestion[]>('', {
     params: {
       language,
@@ -17,3 +17,11 @@ export const GetQuiz = (language: string, type: QuizType, noOfQuestions: number 
     }
   });
 };
+
+export const postQuiz = (quiz: QuizAnswer) => {
+  return instance.post('', {
+    id: quiz.id,
+    userSentenceId: quiz.userSentenceId,
+    answer: quiz.answer
+  })
+}
