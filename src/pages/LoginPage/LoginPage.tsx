@@ -57,8 +57,10 @@ const LoginPage: FC<LoginPageProps> = () => {
   };
 
   return (
-    <div className={styles.LoginPage} data-testid="LoginPage">
-      <img className={styles.logo} alt='logo' src='logo.svg'></img>
+    <div className={styles.LoginPage} data-testid='LoginPage'>
+      <RouterLink to='/'>
+        <img className={styles.logo} alt='logo' src='logo.svg'></img>
+      </RouterLink>
       <span className={styles.header}>Login</span>
       {
         error &&
@@ -69,10 +71,10 @@ const LoginPage: FC<LoginPageProps> = () => {
         </Alert>
       }
       <form className={styles.inputs} onSubmit={onFormSubmit}>
-        <FormControl sx={{ width: '100%' }} variant="filled">
-          <InputLabel htmlFor="user-input">Email / Username</InputLabel>
+        <FormControl sx={{ width: '100%' }} variant='filled'>
+          <InputLabel htmlFor='user-input'>Email / Username</InputLabel>
           <FilledInput
-            id="user-input"
+            id='user-input'
             type='text'
             autoComplete='email'
             value={formValues.user}
@@ -81,22 +83,22 @@ const LoginPage: FC<LoginPageProps> = () => {
             onChange={(e) => onFormInputChange(e)}
           />
         </FormControl>
-        <FormControl sx={{ width: '100%' }} variant="filled">
-          <InputLabel htmlFor="password-input">Password</InputLabel>
+        <FormControl sx={{ width: '100%' }} variant='filled'>
+          <InputLabel htmlFor='password-input'>Password</InputLabel>
           <FilledInput
-            id="password-input"
+            id='password-input'
             autoComplete='current-password'
             name='password'
             type={showPassword ? 'text' : 'password'}
             value={formValues.password}
             onChange={(e) => onFormInputChange(e)}
             endAdornment={
-              <InputAdornment position="end">
+              <InputAdornment position='end'>
                 <IconButton
-                  aria-label="toggle password visibility"
+                  aria-label='toggle password visibility'
                   onClick={onClickShowPassword}
                   onMouseDown={onMouseDownPassword}
-                  edge="end"
+                  edge='end'
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>

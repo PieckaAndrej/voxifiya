@@ -12,6 +12,7 @@ import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import WordInputPage from './pages/WordInputPage/WordInputPage';
 import QuizPage from './pages/QuizPage/QuizPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
 
 
 const App: FC = () => {
@@ -58,11 +59,13 @@ const App: FC = () => {
                   <>
                     <Route path="/" element={<Navigate to={'/words'} />} />
                     <Route path="login" element={<Navigate to={'/'} />} />
+                    <Route path="register" element={<Navigate to={'/'} />} />
                   </>
                 ) : (
                   <>
                     <Route path="/" element={<HomePage />} />
                     <Route path="login" element={<LoginPage />} />
+                    <Route path="register" element={<RegisterPage />} />
                   </>
                 )
               }

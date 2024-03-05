@@ -76,17 +76,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         getSession()
           .then(() => {
             setCsrfToken(Cookies.get('X-CSRF-Token'));
-            value?.login();
+            value.login();
           })
           .catch(() => {
             setLoading(false);
           });
       } else {
-        value?.logout();
+        value.logout();
       }
-    } else if (!value?.user && csrfToken) {
+    } else if (!value.user && csrfToken) {
       setCsrfToken(Cookies.get('X-CSRF-Token'));
-      value?.login();
+      value.login();
     }
   }, [value, csrfToken, setCsrfToken, setLoading]);
 

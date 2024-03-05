@@ -1,10 +1,10 @@
-import { Close, Done, Edit, Refresh, SettingsBackupRestore } from '@mui/icons-material';
-import { IconButton, TextField, Tooltip } from '@mui/material';
+import { Close, Done, Edit, SettingsBackupRestore } from '@mui/icons-material';
+import { IconButton, TextField } from '@mui/material';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { Sentence } from '../../../../models/sentence';
-import styles from './SentenceRow.module.scss';
-import { patchSentence } from '../../../../services/sentenceService';
 import { TransparentTooltip } from '../../../../components/TransparentTooltip';
+import { Sentence } from '../../../../models/sentence';
+import { patchSentence } from '../../../../services/sentenceService';
+import styles from './SentenceRow.module.scss';
 
 interface SentenceRowProps {
   sentence: Sentence;

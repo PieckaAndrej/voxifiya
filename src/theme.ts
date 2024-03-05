@@ -18,6 +18,10 @@ const theme = createTheme({
 });
 
 export const customColors = {
+  registerGradient: {
+    bg: '#040a23',
+    fg: '#5a2a0c'
+  },
   loginGradient: {
     bg: '#090a2b',
     fg: '#0b5250'

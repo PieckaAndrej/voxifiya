@@ -8,6 +8,8 @@ $correctAnswer-gradient-fg: #093f19;
 $correctAnswer-gradient-bg: rgba(#012e2b, 0.7);
 $correctAnswer-gradient-highlight: rgba(#b5c0b3, 0.05);
 
+$registerFlash-gradient-fg: rgba(#4e3930, 0.4);
+
 
 .GradientBackground {
   transition-property: background-color;
@@ -23,6 +25,25 @@ $correctAnswer-gradient-highlight: rgba(#b5c0b3, 0.05);
 
 .loginGradient {
   background-image: radial-gradient(circle at 10% 30%, $login-gradient-fg, transparent);
+}
+
+.registerGradient {
+  background-image: radial-gradient(circle at 50% 30%, $register-gradient-fg, transparent);
+}
+
+.registerFlash1 {
+  background-image: radial-gradient(circle at 80% 70%, $registerFlash-gradient-fg 8%, transparent 17%);
+  animation-delay: 0.5s;
+}
+
+.registerFlash2 {
+  background-image: radial-gradient(circle at 20% 40%, $registerFlash-gradient-fg 5%, transparent 10%);
+  animation-delay: 1s;
+}
+
+.registerFlash3 {
+  background-image: radial-gradient(circle at 70% 40%, $registerFlash-gradient-fg 20%, transparent 37%);
+  animation-delay: 1.5s;
 }
 
 .quizGradient {

@@ -5,11 +5,12 @@ import { customColors } from '../../theme';
 import { useGradient } from '../../hooks/useGradient';
 import { Answer } from '../../models/enums/answer';
 
-interface GradientBackgroundProps {}
+interface GradientBackgroundProps { }
 
 interface BackgroundGradient {
   color: string;
   className: string;
+  path: string;
 }
 
 const GradientBackground: FC<GradientBackgroundProps> = () => {
@@ -19,34 +20,36 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
 
   const backgroundConfig: { [key: string]: BackgroundGradient } = useMemo(() => {
     return {
+      register: {
+        color: customColors.registerGradient.bg,
+        className: styles.registerGradient,
+        path: '/register'
+      },
       login: {
         color: customColors.loginGradient.bg,
-        className: styles.loginGradient
+        className: styles.loginGradient,
+        path: '/login'
       },
       words: {
         color: customColors.wordsGradient.bg,
-        className: styles.wordsGradient
+        className: styles.wordsGradient,
+        path: '/words'
       },
       quiz: {
         color: customColors.quizGradient.bg,
-        className: styles.quizGradient
+        className: styles.quizGradient,
+        path: '/quiz'
       },
-    };
+    }
   }, []);
 
   useEffect(() => {
-    switch (location.pathname) {
-      case '/words':
-        setBackground(backgroundConfig.words);
-        break;
-      case '/login':
-        setBackground(backgroundConfig.login);
-        break;
-      case '/quiz':
-        setBackground(backgroundConfig.quiz);
-        break;
+    for (const key of Object.keys(backgroundConfig)) {
+      if (location.pathname === backgroundConfig[key].path) {
+        setBackground(backgroundConfig[key]);
+      }
     }
-  }, [location, background, backgroundConfig]);
+  }, [location, backgroundConfig, setBackground]);
 
   const renderGradients = useCallback(() => {
     return Object.keys(backgroundConfig).map((name, index) => {
@@ -61,6 +64,14 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
       style={{ backgroundColor: background?.color }}
       data-testid="GradientBackground">
       {renderGradients()}
+      {
+        location.pathname === '/register' &&
+        <div>
+          <div className={[styles.answerGradient, styles.registerFlash1].join(' ')}></div>
+          <div className={[styles.answerGradient, styles.registerFlash2].join(' ')}></div>
+          <div className={[styles.answerGradient, styles.registerFlash3].join(' ')}></div>
+        </div>
+      }
       {
         gradient?.answer === Answer.Correct &&
         <div key={gradient.countKey}>
