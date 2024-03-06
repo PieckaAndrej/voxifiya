@@ -112,6 +112,15 @@ const WordInputPage: FC<WordInputPageProps> = () => {
     });
   };
 
+  const onDeleteSentence = (sentence: Sentence) => {
+    setSentences(prevSentences => {
+      const index = prevSentences.items.findIndex(s => s.id === sentence.id);
+      prevSentences.items.splice(index, 1);;
+
+      return {...prevSentences};
+    });
+  }
+
   const renderSentences = () => {
     return sentences?.items.map((sentence, id) => {
       return (
@@ -119,6 +128,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
           key={id}
           editing={editing === sentence}
           updateSentence={onUpdateSentence}
+          deleteSentence={onDeleteSentence}
           setEditing={(editing) => setEditing(editing ? sentence : null)}/>
       );
     });

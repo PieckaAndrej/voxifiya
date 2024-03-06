@@ -1,9 +1,9 @@
-import { Close, Done, Edit, SettingsBackupRestore } from '@mui/icons-material';
-import { IconButton, TextField } from '@mui/material';
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { Close, Delete, Done, Edit, SettingsBackupRestore } from '@mui/icons-material';
+import { Backdrop, BackdropRoot, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
+import { ChangeEvent, FC, Fragment, useEffect, useState } from 'react';
 import { TransparentTooltip } from '../../../../components/TransparentTooltip';
 import { Sentence } from '../../../../models/sentence';
-import { patchSentence } from '../../../../services/sentenceService';
+import { deleteSentence, patchSentence } from '../../../../services/sentenceService';
 import styles from './SentenceRow.module.scss';
 
 interface SentenceRowProps {
@@ -11,11 +11,13 @@ interface SentenceRowProps {
   editing: boolean;
   setEditing: (editing: boolean) => void;
   updateSentence: (sentence: Sentence) => void;
+  deleteSentence: (sentence: Sentence) => void;
 }
 
 const SentenceRow: FC<SentenceRowProps> = (props) => {
   const [hovered, setHovered] = useState(false);
   const [inputValue, setInputValue] = useState(props.sentence.translatedText);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const onTextChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
@@ -29,6 +31,23 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  const callDeleteSentence = () => {
+    setDialogOpen(false);
+    setHovered(false);
+
+    deleteSentence(props.sentence.id ?? '')
+      .then((response) => {
+        props.deleteSentence(response.data);
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+  };
+
+  const onDeleteClick = () => {
+    setDialogOpen(true);
   }
 
   const onEditDone = () => {
@@ -47,9 +66,15 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
     callPatchSentence(undefined);
   }
 
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    setHovered(false);
+  };
+
+
   useEffect(() => {
     setInputValue(props.sentence.translatedText);
-  }, [props, setInputValue])
+  }, [props, setInputValue]);
 
   return (
     <div className={styles.SentenceRow}
@@ -103,11 +128,41 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
         }
         {
           hovered && !props.editing &&
-          <IconButton onClick={() => props.setEditing(true)}>
-            <Edit />
-          </IconButton>
+          <Fragment>
+            <IconButton onClick={() => props.setEditing(true)}>
+              <Edit />
+            </IconButton>
+            <IconButton onClick={() => onDeleteClick()}>
+              <Delete />
+            </IconButton>
+          </Fragment>
         }
       </span>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        slotProps={{
+          backdrop: {
+            sx: {backgroundColor: 'rgba(0, 0, 0, 0.4)'}
+          }
+        }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">
+          {`Delete ${props.sentence.text}?`}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {`This will permanently delete ${props.sentence.text} and its progress`}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>Cancel</Button>
+          <Button onClick={() => callDeleteSentence()} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

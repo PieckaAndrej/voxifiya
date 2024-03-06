@@ -22,9 +22,14 @@ $scrollbar-width: 10px;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.MuiDialog-paper,
 .MuiPopover-paper {
   background-color: rgba($color: white, $alpha: 0.1) !important;
-  background-image: none;
+  backdrop-filter: blur(10px);
+}
+
+.MuiDialog-container {
+  transition: none !important;
 }
 
 ::-webkit-scrollbar {
