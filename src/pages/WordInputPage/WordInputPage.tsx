@@ -29,23 +29,35 @@ const WordInputPage: FC<WordInputPageProps> = () => {
   const textInputMarginTop = 10;
 
   const onNewWordClick = useCallback(() => {
+    const addNewSentence = (sentence: Sentence) => {
+      setSentences(prevSentences => {
+        return {
+          ...prevSentences,
+          items: [sentence, ...prevSentences.items]
+        };
+      });
+
+      setScroll(true);
+    };
+
     if (inputValue.length > 1) {
       setInputValue('');
 
       postSentence({ text: inputValue, language: auth?.user?.defaultLanguage ?? '' })
         .then((response) => {
-          setSentences(prevSentences => {
-            return {
-              ...prevSentences,
-              items: [response.data, ...prevSentences.items]
-            };
-          });
-
-          setScroll(true);
+          addNewSentence(response.data);
 
         })
         .catch((error) => {
-          console.log(error);
+          if (error.response?.status === 409) {
+            const sentence: Sentence = error.response.data.sentence;
+
+            if (sentence) {
+              sentence.conflict = true;
+
+              addNewSentence(sentence);
+            }
+          }
         });
     }
   }, [inputValue, auth, setSentences, setScroll]);

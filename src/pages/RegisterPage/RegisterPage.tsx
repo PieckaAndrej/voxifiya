@@ -100,9 +100,12 @@ const RegisterPage: FC<RegisterPageProps> = () => {
                 name='username'
                 autoFocus
               />
-              <FormHelperText className={styles.helperText} id='username-helper-text'>
-                {formik.touched.username && formik.errors.username}
-              </FormHelperText>
+              {
+                formik.touched.username &&
+                <FormHelperText className={styles.helperText} id='username-helper-text'>
+                  {formik.touched.username && formik.errors.username}
+                </FormHelperText>
+              }
             </FormControl>
             <FormControl sx={{ width: '100%' }} variant='filled'
               error={formik.touched.email && !!formik.errors.email}>
@@ -115,9 +118,12 @@ const RegisterPage: FC<RegisterPageProps> = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
               />
-              <FormHelperText className={styles.helperText} id='email-helper-text'>
-                {formik.touched.email && formik.errors.email}
-              </FormHelperText>
+              {
+                formik.touched.email &&
+                <FormHelperText className={styles.helperText} id='email-helper-text'>
+                  {formik.touched.email && formik.errors.email}
+                </FormHelperText>
+              }
             </FormControl>
             <FormControl sx={{ width: '100%' }} variant='filled'
               error={formik.touched.password && !!formik.errors.password}>
@@ -130,9 +136,12 @@ const RegisterPage: FC<RegisterPageProps> = () => {
                 value={formik.values.password}
                 onChange={formik.handleChange}
               />
-              <FormHelperText className={styles.helperText} id='password-helper-text'>
-                {formik.touched.password && formik.errors.password}
-              </FormHelperText>
+              {
+                formik.touched.password &&
+                <FormHelperText className={styles.helperText} id='password-helper-text'>
+                  {formik.touched.password && formik.errors.password}
+                </FormHelperText>
+              }
             </FormControl>
             <FormControl sx={{ width: '100%' }} variant='filled'
               error={formik.touched.repeatPassword && !!formik.errors.repeatPassword}>
@@ -145,9 +154,12 @@ const RegisterPage: FC<RegisterPageProps> = () => {
                 value={formik.values.repeatPassword}
                 onChange={formik.handleChange}
               />
-              <FormHelperText className={styles.helperText} id='password-repeat-helper-text'>
-                {formik.touched.repeatPassword && formik.errors.repeatPassword}
-              </FormHelperText>
+              {
+                formik.errors.repeatPassword &&
+                <FormHelperText className={styles.helperText} id='password-repeat-helper-text'>
+                  {formik.touched.repeatPassword && formik.errors.repeatPassword}
+                </FormHelperText>
+              }
             </FormControl>
             <Button sx={{ width: '100%' }}
               variant='contained'

@@ -7,8 +7,10 @@ export const TransparentTooltip = styled(({ className, ...props }: TooltipProps)
 ))(() => ({
   [`& .${tooltipClasses.arrow}`]: {
     color: theme.palette.primary.main+'33',
+    backdropFilter: 'blur(10px)'
   },
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.primary.main+'33',
+    backdropFilter: 'blur(10px)'
   },
 }));

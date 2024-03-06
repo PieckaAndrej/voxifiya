@@ -11,7 +11,10 @@ $column-gap: 10px;
 
 .text {
   color: rgba($color: #fff, $alpha: 0.9);
-  text-align: right;
+  display: inline-flex;
+  gap: 5px;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .input {

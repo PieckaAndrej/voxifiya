@@ -20,6 +20,12 @@
   flex-direction: column;
 }
 
+.helperText {
+  animation-name: openAlert;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+}
+
 .registerLogo {
   height: 400px;
   width: 400px;

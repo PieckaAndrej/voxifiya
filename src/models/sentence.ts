@@ -5,4 +5,5 @@ export interface Sentence {
   text: string;
   createdDate?: Date;
   language: string;
+  conflict?: boolean;
 }

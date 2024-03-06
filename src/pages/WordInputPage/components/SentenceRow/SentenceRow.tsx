@@ -1,4 +1,4 @@
-import { Close, Delete, Done, Edit, SettingsBackupRestore } from '@mui/icons-material';
+import { Close, Delete, Done, Edit, InfoOutlined, SettingsBackupRestore } from '@mui/icons-material';
 import { Backdrop, BackdropRoot, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
 import { ChangeEvent, FC, Fragment, useEffect, useState } from 'react';
 import { TransparentTooltip } from '../../../../components/TransparentTooltip';
@@ -82,12 +82,18 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
       onMouseLeave={() => setHovered(false)}
       data-testid="SentenceRow">
       <span className={styles.text}>
+        {
+          props.sentence.conflict && 
+          <TransparentTooltip title="This sentence is already present. It won't be added a second time.">
+            <InfoOutlined sx={{color: 'rgba(255, 255, 255, 0.4)'}}/>
+          </TransparentTooltip>
+        }
         {props.sentence.text}
       </span>
       <span className={styles.translation}>
         {
           props.editing ? (
-            <>
+            <Fragment>
               <TextField
                 value={inputValue}
                 autoComplete='off'
@@ -121,13 +127,13 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
                   </IconButton>
                 </TransparentTooltip>
               }
-            </>
+            </Fragment>
           ) : (
             props.sentence.translatedText
           )
         }
         {
-          hovered && !props.editing &&
+          hovered && !props.sentence.conflict && !props.editing &&
           <Fragment>
             <IconButton onClick={() => props.setEditing(true)}>
               <Edit />
