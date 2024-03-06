@@ -10,3 +10,9 @@ const instance = axios.create({
 export const getMe = () => {
   return instance.get<User>('me');
 };
+
+export const patchMe = (defaultLanguage: string) => {
+  return instance.patch<User>('me', {
+    defaultLanguage
+  });
+}

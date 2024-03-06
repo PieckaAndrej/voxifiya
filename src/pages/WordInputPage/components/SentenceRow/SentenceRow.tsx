@@ -71,7 +71,6 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
     setHovered(false);
   };
 
-
   useEffect(() => {
     setInputValue(props.sentence.translatedText);
   }, [props, setInputValue]);

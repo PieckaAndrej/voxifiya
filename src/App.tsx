@@ -1,5 +1,5 @@
-import { Box, CircularProgress } from '@mui/material';
-import { FC } from 'react';
+import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { FC, Fragment, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import styles from './App.module.scss';
 import GradientBackground from './components/GradientBackground/GradientBackground';
@@ -13,6 +13,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import WordInputPage from './pages/WordInputPage/WordInputPage';
 import QuizPage from './pages/QuizPage/QuizPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
+import LanguageSelect from './components/LanguageSelect/LanguageSelect';
 
 
 const App: FC = () => {
@@ -26,12 +27,13 @@ const App: FC = () => {
       </div>
       {
         auth?.user &&
-        <>
+        <Fragment>
           <Sidenav />
           <div className={styles.menu}>
             <UserMenu />
           </div>
-        </>
+          <LanguageSelect />
+        </Fragment>
       }
       <div className={styles.container}>
         {

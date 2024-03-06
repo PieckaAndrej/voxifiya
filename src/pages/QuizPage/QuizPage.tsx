@@ -9,26 +9,31 @@ import { getQuiz, postQuiz } from '../../services/quizService';
 import styles from './QuizPage.module.scss';
 import MultiChoiceQuestion from './components/MultiChoiceQuestion/MultiChoiceQuestion';
 
-interface QuizPageProps {}
+interface QuizPageProps { }
 
 const QuizPage: FC<QuizPageProps> = () => {
   const auth = useAuth();
   const gradient = useGradient();
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    if (quizQuestions.length <= 1) {
-      getQuiz(auth?.user?.defaultLanguage ?? '', QuizType.GuessForeign)
+    if (quizQuestions.length <= 1 && !!auth?.user?.defaultLanguage) {
+      getQuiz(auth?.user?.defaultLanguage, QuizType.GuessForeign)
         .then((response) => {
-          setQuizQuestions(prevQuizQuestions => {
-            return [...prevQuizQuestions, ...response.data];
-          });
+          if (response.data) {
+            setQuizQuestions(prevQuizQuestions => {
+              return [...prevQuizQuestions, ...response.data];
+            });
+          } else if (response.status === 204) {
+            setError('Enter at least 5 unique sentences in the sentence page');
+          }
         })
         .catch((error) => {
           console.log(error);
         });
     }
-  }, [auth, quizQuestions, setQuizQuestions]);
+  }, [auth, quizQuestions, setQuizQuestions, setError]);
 
   const onAnswer = (answer: Answer) => {
     gradient?.setAnswer(answer);
@@ -67,7 +72,13 @@ const QuizPage: FC<QuizPageProps> = () => {
           renderQuestion()
         ) : (
           <Box display='flex' alignItems='center' width='100%' justifyContent='center'>
-            <CircularProgress sx={{width: '70px', height: '70px'}} />
+            {
+              !!error ? (
+                <span className={styles.error}>{error}</span>
+              ) : (
+                <CircularProgress sx={{ width: '70px', height: '70px' }} />
+              )
+            }
           </Box>
         )
       }

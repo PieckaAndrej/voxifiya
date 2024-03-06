@@ -84,31 +84,33 @@ const WordInputPage: FC<WordInputPageProps> = () => {
   }, [inputValue, onNewWordClick]);
 
   const loadSentences = () => {
-    getSentences(auth?.user?.defaultLanguage ?? '',
-      sentences.items[sentences.items.length - 1]?.createdDate)
+    if (auth?.user?.defaultLanguage) {
+      getSentences(auth.user.defaultLanguage,
+        sentences.items[sentences.items.length - 1]?.createdDate)
 
-      .then((response) => {
+        .then((response) => {
 
-        setSentences(prevSentences => {
-          let items = prevSentences.items;
+          setSentences(prevSentences => {
+            let items = prevSentences.items;
 
-          if (prevSentences.items[prevSentences.items.length - 1]?.id !==
-            response.data.items[response.data.items.length - 1]?.id) {
+            if (prevSentences.items[prevSentences.items.length - 1]?.id !==
+              response.data.items[response.data.items.length - 1]?.id) {
 
-            items = prevSentences?.items ?
-              prevSentences.items.concat(response.data.items) :
-              response.data.items;
-          }
+              items = prevSentences?.items ?
+                prevSentences.items.concat(response.data.items) :
+                response.data.items;
+            }
 
-          return {
-            ...response.data,
-            items
-          };
+            return {
+              ...response.data,
+              items
+            };
+          });
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }
   };
 
   const onTextChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -127,7 +129,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
   const onDeleteSentence = (sentence: Sentence) => {
     setSentences(prevSentences => {
       const index = prevSentences.items.findIndex(s => s.id === sentence.id);
-      prevSentences.items.splice(index, 1);;
+      prevSentences.items.splice(index, 1);
 
       return {...prevSentences};
     });
@@ -216,10 +218,12 @@ const WordInputPage: FC<WordInputPageProps> = () => {
       {textInputAtBottom && renderTextField(true)}
       <div className={styles.scroll} ref={scrollRef}
         style={textInputAtBottom ?
-          {marginBottom: `${(textInputRef.current?.clientHeight ?? 0) + textInputMarginTop}px`} : {}}>
+          {marginBottom: `${(textInputRef.current?.clientHeight ?? 0) +
+            textInputMarginTop}px`} : {}}>
         <InfiniteScroll
             loadMore={loadSentences}
-            hasMore={sentences?.hasNextPage ?? true}
+            hasMore={!!auth?.user?.defaultLanguage &&
+              (sentences?.hasNextPage ?? true)}
             initialLoad={true}
             isReverse={true}
             useWindow={false}

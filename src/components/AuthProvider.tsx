@@ -9,6 +9,7 @@ import { getSession, postLogout } from '../services/authService';
 export interface Auth {
   user?: User;
   loading: boolean;
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
   login: (navigatePath?: string) => void;
   logout: (navigatePath?: string) => void;
 }
@@ -62,9 +63,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const value = useMemo<Auth>(() => ({
     user,
     loading,
+    setUser,
     login,
     logout,
-  }), [user, loading, login, logout]);
+  }), [user, loading, setUser, login, logout]);
 
   useEffect(() => {
     if (!Cookies.get('Voxifiya.SessionId')) {
