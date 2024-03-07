@@ -49,7 +49,7 @@ const LanguageSelect: FC<LanguageSelectProps> = () => {
   };
 
   const onInputChange = (e: React.SyntheticEvent, value: Language | null) => {
-    e.preventDefault()
+    e.preventDefault();
 
     setInputValue(value);
   };

@@ -46,11 +46,10 @@ const RegisterPage: FC<RegisterPageProps> = () => {
     validationSchema: validationSchema,
     onSubmit: (values, {setSubmitting}) => {
       postRegister(values.username, values.email, values.password)
-        .then((response) => {
+        .then(() => {
           auth?.login();
         })
         .catch((error) => {
-          console.log(error)
           if (error.response?.status === 409) {
             setError(error.response?.data.message);
           } else {

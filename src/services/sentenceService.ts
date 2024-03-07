@@ -30,11 +30,11 @@ export const patchSentence = (id: string, customTranslation: string | undefined)
   return instance.patch<Sentence>(id, {
     customTranslation
   });
-}
+};
 
 export const deleteSentence = (id: string) => {
   return instance.delete<Sentence>(id);
-}
+};
 
 export const getLanguages = () => {
   return instance.get<Language[]>('languages');

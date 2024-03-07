@@ -133,7 +133,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
 
       return {...prevSentences};
     });
-  }
+  };
 
   const renderSentences = () => {
     return sentences?.items.map((sentence, id) => {

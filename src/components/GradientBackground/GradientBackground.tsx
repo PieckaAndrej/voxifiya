@@ -40,7 +40,7 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
         className: styles.quizGradient,
         path: '/quiz'
       },
-    }
+    };
   }, []);
 
   useEffect(() => {

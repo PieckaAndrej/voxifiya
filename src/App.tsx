@@ -1,8 +1,9 @@
-import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { FC, Fragment, useEffect, useState } from 'react';
+import { Box, CircularProgress } from '@mui/material';
+import { FC, Fragment } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import styles from './App.module.scss';
 import GradientBackground from './components/GradientBackground/GradientBackground';
+import LanguageSelect from './components/LanguageSelect/LanguageSelect';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import Sidenav from './components/Sidenav/Sidenav';
 import UserMenu from './components/UserMenu/UserMenu';
@@ -10,10 +11,9 @@ import { useAuth } from './hooks/useAuth';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
-import WordInputPage from './pages/WordInputPage/WordInputPage';
 import QuizPage from './pages/QuizPage/QuizPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
-import LanguageSelect from './components/LanguageSelect/LanguageSelect';
+import WordInputPage from './pages/WordInputPage/WordInputPage';
 
 
 const App: FC = () => {

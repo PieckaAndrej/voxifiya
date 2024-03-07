@@ -1,5 +1,5 @@
 import { Close, Delete, Done, Edit, InfoOutlined, SettingsBackupRestore } from '@mui/icons-material';
-import { Backdrop, BackdropRoot, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material';
 import { ChangeEvent, FC, Fragment, useEffect, useState } from 'react';
 import { TransparentTooltip } from '../../../../components/TransparentTooltip';
 import { Sentence } from '../../../../models/sentence';
@@ -31,7 +31,7 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   const callDeleteSentence = () => {
     setDialogOpen(false);
@@ -42,13 +42,13 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
         props.deleteSentence(response.data);
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       });
   };
 
   const onDeleteClick = () => {
     setDialogOpen(true);
-  }
+  };
 
   const onEditDone = () => {
     props.setEditing(false);
@@ -64,7 +64,7 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
   const onSetOriginal = () => {
     props.setEditing(false);
     callPatchSentence(undefined);
-  }
+  };
 
   const handleDialogClose = () => {
     setDialogOpen(false);
@@ -82,7 +82,7 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
       data-testid="SentenceRow">
       <span className={styles.text}>
         {
-          props.sentence.conflict && 
+          props.sentence.conflict &&
           <TransparentTooltip title="This sentence is already present. It won't be added a second time.">
             <InfoOutlined sx={{color: 'rgba(255, 255, 255, 0.4)'}}/>
           </TransparentTooltip>
@@ -103,11 +103,11 @@ const SentenceRow: FC<SentenceRowProps> = (props) => {
                 sx={{maxWidth: '200px'}}
                 autoFocus={true} />
               <TransparentTooltip title='Done'
-                disableHoverListener={(inputValue?.length ?? 0) === 0 || 
+                disableHoverListener={(inputValue?.length ?? 0) === 0 ||
                       inputValue?.toLowerCase() === props.sentence.translatedText}>
                 <span style={{display: 'flex'}}>
                   <IconButton onClick={() => onEditDone()}
-                    disabled={(inputValue?.length ?? 0) === 0 || 
+                    disabled={(inputValue?.length ?? 0) === 0 ||
                       inputValue?.toLowerCase() === props.sentence.translatedText}>
                     <Done />
                   </IconButton>

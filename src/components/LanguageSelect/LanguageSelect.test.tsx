@@ -6,7 +6,7 @@ import LanguageSelect from './LanguageSelect';
 describe('<LanguageSelect />', () => {
   test('it should mount', () => {
     render(<LanguageSelect />);
-    
+
     const languageSelect = screen.getByTestId('LanguageSelect');
 
     expect(languageSelect).toBeInTheDocument();

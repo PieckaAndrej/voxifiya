@@ -15,4 +15,4 @@ export const patchMe = (defaultLanguage: string) => {
   return instance.patch<User>('me', {
     defaultLanguage
   });
-}
+};

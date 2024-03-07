@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { TooltipProps, Tooltip, tooltipClasses } from "@mui/material";
+import styled from '@emotion/styled';
+import { TooltipProps, Tooltip, tooltipClasses } from '@mui/material';
 import theme from '.././theme.ts';
 
 export const TransparentTooltip = styled(({ className, ...props }: TooltipProps) => (

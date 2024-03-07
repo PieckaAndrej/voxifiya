@@ -73,7 +73,7 @@ const QuizPage: FC<QuizPageProps> = () => {
         ) : (
           <Box display='flex' alignItems='center' width='100%' justifyContent='center'>
             {
-              !!error ? (
+              error ? (
                 <span className={styles.error}>{error}</span>
               ) : (
                 <CircularProgress sx={{ width: '70px', height: '70px' }} />
