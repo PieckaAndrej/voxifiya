@@ -7,6 +7,7 @@ interface HomePageProps {}
 
 const HomePage: FC<HomePageProps> = () => (
   <div className={styles.HomePage} data-testid="HomePage">
+    Voxifiya
     <Link component={RouterLink} to='/register'>Register</Link>
     <Link component={RouterLink} to='/login'>Login</Link>
   </div>

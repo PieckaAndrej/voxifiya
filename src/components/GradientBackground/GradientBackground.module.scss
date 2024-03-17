@@ -19,8 +19,8 @@ $registerFlash-gradient-fg: rgba(#4e3930, 0.4);
   position: fixed;
 }
 
-.wordsGradient {
-  background-image: radial-gradient(circle at 80% 30%, $words-gradient-fg, transparent);
+.sentencesGradient {
+  background-image: radial-gradient(circle at 80% 30%, $sentences-gradient-fg, transparent);
 }
 
 .loginGradient {

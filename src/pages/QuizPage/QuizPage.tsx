@@ -19,7 +19,7 @@ const QuizPage: FC<QuizPageProps> = () => {
 
   useEffect(() => {
     if (quizQuestions.length <= 1 && !!auth?.user?.defaultLanguage) {
-      getQuiz(auth?.user?.defaultLanguage, QuizType.GuessForeign)
+      getQuiz(auth?.user?.defaultLanguage.code, QuizType.GuessForeign)
         .then((response) => {
           if (response.data) {
             setQuizQuestions(prevQuizQuestions => {

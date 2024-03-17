@@ -1,9 +1,8 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
-import styles from './Sidenav.module.scss';
-import { useLocation } from 'react-router-dom';
 import { Calculate, Translate } from '@mui/icons-material';
 import { Button, Link } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { FC, useEffect, useMemo, useState } from 'react';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
+import styles from './Sidenav.module.scss';
 
 interface SidenavProps { }
 
@@ -24,8 +23,8 @@ const Sidenav: FC<SidenavProps> = () => {
       {
         icon: <Translate />,
         text: 'sentences',
-        path: '/words',
-        backgroundStyle: styles.wordsGradient
+        path: '/sentences',
+        backgroundStyle: styles.sentencesGradient
       },
       {
         icon: <Calculate />,

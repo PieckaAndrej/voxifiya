@@ -1,6 +1,8 @@
-import { Box, Button, Popover } from '@mui/material';
+import { Edit } from '@mui/icons-material';
+import { Box, Button, IconButton, Popover } from '@mui/material';
 import React, { FC } from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { TransparentTooltip } from '../TransparentTooltip';
 import styles from './UserMenu.module.scss';
 
 interface UserMenuProps { }
@@ -36,8 +38,19 @@ const UserMenu: FC<UserMenuProps> = () => {
           horizontal: 'left',
         }}
       >
-        <Box display='flex' flexDirection='column' m={2} gap={1}>
-          {auth?.user?.email}
+        <Box display='flex' flexDirection='column' alignItems='center' m={2} gap='3px'>
+          <span>{auth?.user?.email}</span>
+          <Box display='inline-flex' alignItems='center' gap={1}>
+            <span className={styles.language}>Language:</span>
+            <Box display='inline-flex' alignItems='center'>
+              <span>{auth?.user?.defaultLanguage?.name}</span>
+              <TransparentTooltip title='Change language'>
+                <IconButton onClick={() => {}} size='small'>
+                  <Edit fontSize='small' />
+                </IconButton>
+              </TransparentTooltip>
+            </Box>
+          </Box>
           <Button size='small' onClick={() => auth?.logout()}>
             Logout
           </Button>

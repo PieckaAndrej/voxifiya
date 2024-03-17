@@ -1,16 +1,18 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import { render, screen } from '@testing-library/react';
 import SentenceRow from './SentenceRow';
 
 describe('<SentenceRow />', () => {
   test('it should mount', () => {
     render(<SentenceRow sentence={{
-      createdDate: new Date(),
-      text: 'hel',
-      translatedText: 'hello',
-      id: ''
-    }}/>);
+      text: '',
+      language: ''
+    }}
+    editing={false}
+    setEditing={() => {}}
+    updateSentence={() => {}}
+    deleteSentence={() => {}}
+    />);
 
     const sentenceRow = screen.getByTestId('SentenceRow');
 

@@ -26,7 +26,7 @@ export const customColors = {
     bg: '#090a2b',
     fg: '#0b5250'
   },
-  wordsGradient: {
+  sentencesGradient: {
     bg: '#0c0b43',
     fg: '#3d2525'
   },

@@ -1,11 +1,10 @@
 import axios from 'axios';
-import { environment } from '../environment';
 import { Page } from '../models/page';
 import { Language } from '../models/language';
 import { Sentence } from '../models/sentence';
 
 const instance = axios.create({
-  baseURL: `${environment.backendUrl}/api/sentence/`,
+  baseURL: `${import.meta.env.VITE_API_URL}/api/sentence/`,
   withCredentials: true,
 });
 

@@ -25,23 +25,23 @@ const App: FC = () => {
         <GradientBackground />
         <div className={styles.noise}></div>
       </div>
-      {
-        auth?.user &&
-        <Fragment>
-          <Sidenav />
-          <div className={styles.menu}>
-            <UserMenu />
-          </div>
-          <LanguageSelect />
-        </Fragment>
-      }
       <div className={styles.container}>
+        {
+          auth?.user &&
+          <Fragment>
+            <Sidenav />
+            <div className={styles.menu}>
+              <UserMenu />
+            </div>
+            <LanguageSelect />
+          </Fragment>
+        }
         {
           !auth?.loading ? (
             <Routes>
               <Route path="*" element={<ErrorPage />} />
               <Route
-                path="words"
+                path="sentences"
                 element={
                   <ProtectedRoute>
                     <WordInputPage />
@@ -59,7 +59,7 @@ const App: FC = () => {
               {
                 auth?.user ? (
                   <>
-                    <Route path="/" element={<Navigate to={'/words'} />} />
+                    <Route path="/" element={<Navigate to={'/sentences'} />} />
                     <Route path="login" element={<Navigate to={'/'} />} />
                     <Route path="register" element={<Navigate to={'/'} />} />
                   </>

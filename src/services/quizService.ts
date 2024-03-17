@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { environment } from '../environment';
 import { QuizType } from '../models/enums/quizType';
 import { QuizAnswer, QuizQuestion } from '../models/quiz';
 
 const instance = axios.create({
-  baseURL: `${environment.backendUrl}/api/quiz/`,
+  baseURL: `${import.meta.env.VITE_API_URL}/api/quiz/`,
   withCredentials: true,
 });
 

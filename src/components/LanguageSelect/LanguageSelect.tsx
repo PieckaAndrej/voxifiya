@@ -30,7 +30,7 @@ const LanguageSelect: FC<LanguageSelectProps> = () => {
 
   const handleDialogSelect = () => {
     if (inputValue) {
-      patchMe(inputValue?.language)
+      patchMe(inputValue)
         .then((response) => {
           setDialogOpen(false);
 
@@ -93,7 +93,7 @@ const LanguageSelect: FC<LanguageSelectProps> = () => {
             onChange={onInputChange}
             options={languages}
             getOptionLabel={(option) => option.name}
-            getOptionKey={(option) => option.language}
+            getOptionKey={(option) => option.code}
             renderInput={(params) => <TextField {...params} label='Language' />}
           />
         </DialogContent>

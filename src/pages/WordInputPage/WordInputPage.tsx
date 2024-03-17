@@ -22,7 +22,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
   const [scroll, setScroll] = useState<boolean>(false);
   const [textInputAtBottom, setTextInputAtBottom] = useState<boolean>(false);
 
-  const wordsEndRef = useRef<HTMLDivElement>(null);
+  const sentencesEndRef = useRef<HTMLDivElement>(null);
   const textInputRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -43,7 +43,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
     if (inputValue.length > 1) {
       setInputValue('');
 
-      postSentence({ text: inputValue, language: auth?.user?.defaultLanguage ?? '' })
+      postSentence({ text: inputValue, language: auth?.user?.defaultLanguage?.code ?? '' })
         .then((response) => {
           addNewSentence(response.data);
 
@@ -65,7 +65,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
   // If new sentence scroll to it
   useEffect(() => {
     if (scroll) {
-      wordsEndRef?.current?.scrollIntoView({behavior: 'smooth'});
+      sentencesEndRef?.current?.scrollIntoView({behavior: 'smooth'});
       setScroll(false);
     }
   }, [scroll, sentences, setScroll]);
@@ -85,7 +85,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
 
   const loadSentences = () => {
     if (auth?.user?.defaultLanguage) {
-      getSentences(auth.user.defaultLanguage,
+      getSentences(auth.user.defaultLanguage.code,
         sentences.items[sentences.items.length - 1]?.createdDate)
 
         .then((response) => {
@@ -237,7 +237,7 @@ const WordInputPage: FC<WordInputPageProps> = () => {
           </div>
         </InfiniteScroll>
         <div style={{ float:'left', clear: 'both' }}
-            ref={wordsEndRef}>
+            ref={sentencesEndRef}>
         </div>
         {renderTextField(false)}
       </div>

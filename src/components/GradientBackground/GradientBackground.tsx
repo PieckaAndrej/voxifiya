@@ -1,9 +1,9 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import styles from './GradientBackground.module.scss';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { customColors } from '../../theme';
 import { useGradient } from '../../hooks/useGradient';
 import { Answer } from '../../models/enums/answer';
+import { customColors } from '../../theme';
+import styles from './GradientBackground.module.scss';
 
 interface GradientBackgroundProps { }
 
@@ -30,10 +30,10 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
         className: styles.loginGradient,
         path: '/login'
       },
-      words: {
-        color: customColors.wordsGradient.bg,
-        className: styles.wordsGradient,
-        path: '/words'
+      sentences: {
+        color: customColors.sentencesGradient.bg,
+        className: styles.sentencesGradient,
+        path: '/sentences'
       },
       quiz: {
         color: customColors.quizGradient.bg,
