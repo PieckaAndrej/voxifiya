@@ -1,9 +1,9 @@
 import { Button } from '@mui/material';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, Fragment, useCallback, useEffect, useState } from 'react';
 import { Answer } from '../../../../models/enums/answer';
 import { QuizQuestion, WrongAnswer } from '../../../../models/quiz';
 import styles from './MultiChoiceQuestion.module.scss';
-import { AdsClick, SpaceBar } from '@mui/icons-material';
+import { AdsClick, SpaceBar, TouchApp } from '@mui/icons-material';
 import { useIsMobile } from '../../../../hooks/useIsMobile';
 
 interface MultiChoiceQuestionProps {
@@ -95,15 +95,29 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
         <div className={styles.nextQuestion} onClick={() => props.onNextQuestion()}></div>
       }
       {
-        showHint && !isMobile &&
+        showHint &&
         <div className={styles.hint}>
           <span>
-            Press spacebar or click for next question
+            {
+              isMobile ? (
+                'Tap for next question'
+              ) : (
+                'Press spacebar or click for next question'
+              )
+            }
           </span>
           <div className={styles.hintIcons}>
-            <SpaceBar />
-            /
-            <AdsClick />
+            {
+              isMobile ? (
+                <TouchApp />
+              ) : (
+                <Fragment>
+                  <SpaceBar />
+                  /
+                  <AdsClick />
+                </Fragment>
+              )
+            }
           </div>
         </div>
       }
