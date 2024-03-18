@@ -2,8 +2,8 @@ import { Button } from '@mui/material';
 import { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import styles from './HomePage.module.scss';
-import './letters.scss'
-import Logo from "../../assets/register-letters.svg?react";
+import './letters.scss';
+import Logo from '../../assets/register-letters.svg?react';
 
 interface HomePageProps {}
 

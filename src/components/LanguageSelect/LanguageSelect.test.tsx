@@ -4,7 +4,7 @@ import LanguageSelect from './LanguageSelect';
 
 describe('<LanguageSelect />', () => {
   test('it should mount', () => {
-    render(<LanguageSelect 
+    render(<LanguageSelect
       canClose={false}
       dialogOpen={false}
       setDialogOpen={() => {}}/>);

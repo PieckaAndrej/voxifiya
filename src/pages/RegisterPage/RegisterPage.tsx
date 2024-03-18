@@ -8,11 +8,13 @@ import * as yup from 'yup';
 import { postRegister } from '../../services/authService';
 import styles from './RegisterPage.module.scss';
 import { useAuth } from '../../hooks/useAuth';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 interface RegisterPageProps { }
 
 const RegisterPage: FC<RegisterPageProps> = () => {
   const auth = useAuth();
+  const isMobile = useIsMobile();
 
   const [error, setError] = useState<string>('');
 
@@ -64,7 +66,6 @@ const RegisterPage: FC<RegisterPageProps> = () => {
 
   return (
     <div className={styles.RegisterPage} data-testid='RegisterPage'>
-      {/* <TextSvg className={styles.text} /> */}
       <RouterLink to='/'>
         <img className={styles.logo} alt='logo' src='logo.svg'></img>
       </RouterLink>
@@ -75,7 +76,10 @@ const RegisterPage: FC<RegisterPageProps> = () => {
         alignItems: 'center',
         gap: '20px',
       }}>
-        <img className={styles.registerLogo} alt='logo' src='register-logo.svg'></img>
+        {
+          !isMobile &&
+          <img className={styles.registerLogo} alt='logo' src='register-logo.svg'></img>
+        }
         <div className={styles.form}>
           <span className={styles.header}>Register</span>
           {

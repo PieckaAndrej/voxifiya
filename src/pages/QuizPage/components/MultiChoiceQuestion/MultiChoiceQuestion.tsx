@@ -32,7 +32,7 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
     if (answered !== null) {
       setShowHint(true);
     }
-  }, [answered, showHint]);
+  }, [answered, setShowHint]);
 
   useEffect(() => {
     if (answered === null) {
@@ -40,9 +40,9 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
     } else {
       setTimeout(() => {
         callShowHint();
-      }, 3000)
+      }, 3000);
     }
-  }, [answered, setShowHint, callShowHint])
+  }, [answered, setShowHint, callShowHint]);
 
   const onAnswerClick = useCallback((id: string) => {
     if (!answered) {
@@ -93,7 +93,7 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
         <div className={styles.nextQuestion} onClick={() => props.onNextQuestion()}></div>
       }
       {
-        showHint && 
+        showHint &&
         <div className={styles.hint}>
           <span>
             Press spacebar or click for next question

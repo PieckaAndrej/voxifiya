@@ -9,6 +9,7 @@ import { AuthProvider } from './components/AuthProvider.tsx';
 import './index.scss';
 import theme from './theme.ts';
 import { GradientProvider } from './components/GradientProvider.tsx';
+import { IsMobileProvider } from './components/IsMobileProvider.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -16,9 +17,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <CssBaseline />
       <BrowserRouter>
         <AuthProvider>
-          <GradientProvider>
-            <App />
-          </GradientProvider>
+          <IsMobileProvider>
+            <GradientProvider>
+              <App />
+            </GradientProvider>
+          </IsMobileProvider>
         </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>

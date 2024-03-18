@@ -1,27 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="47" height="53"><svg width="47" height="53" viewBox="0 0 47 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M13.3472 27.4148L23.5 45L33.5657 27.5656L44.8258 47.0686H2L13.3472 27.4148Z" fill="url(#paint0_linear_37_2)"></path>
-<g filter="url(#filter0_d_37_2)">
-<path d="M23.5 45L4.01443 11.25L42.9856 11.25L23.5 45Z" fill="url(#paint1_linear_37_2)"></path>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="1000" height="1000"><rect width="1000" height="1000" rx="200" ry="200" fill="#252741"></rect><g transform="matrix(15.09433962264151,0,0,15.09433962264151,146.51062281626577,62.51892474912245)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="47" height="53"><svg width="47" height="53" viewBox="0 0 47 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.3472 27.4148L23.5 45L33.5657 27.5656L44.8258 47.0686H2L13.3472 27.4148Z" fill="white"></path>
+<g filter="url(#filter0_d_44_2)">
+<path d="M23.5 45L4.01443 11.25L42.9856 11.25L23.5 45Z" fill="white"></path>
 </g>
 <defs>
-<filter id="SvgjsFilter1002" x="0.0144348" y="11.25" width="46.9711" height="41.75" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_d_44_2" x="0.0144348" y="11.25" width="46.9711" height="41.75" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
 <feOffset dy="4"></feOffset>
 <feGaussianBlur stdDeviation="2"></feGaussianBlur>
 <feComposite in2="hardAlpha" operator="out"></feComposite>
 <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_37_2"></feBlend>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_37_2" result="shape"></feBlend>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_44_2"></feBlend>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_44_2" result="shape"></feBlend>
 </filter>
-<linearGradient id="SvgjsLinearGradient1001" x1="23.4129" y1="-25.0675" x2="23" y2="57" gradientUnits="userSpaceOnUse">
-<stop stop-color="#D9D9D9"></stop>
-<stop offset="1" stop-color="#1C1C1C"></stop>
-</linearGradient>
-<linearGradient id="SvgjsLinearGradient1000" x1="1" y1="45.3625" x2="43.0395" y2="45.3625" gradientUnits="userSpaceOnUse">
-<stop stop-color="white"></stop>
-<stop offset="1" stop-color="#444444"></stop>
-</linearGradient>
 </defs>
-</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-</style></svg>
+</svg></svg></g></svg>

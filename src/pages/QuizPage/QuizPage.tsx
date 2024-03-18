@@ -39,7 +39,7 @@ const QuizPage: FC<QuizPageProps> = () => {
   // When the language is changed
   useEffect(() => {
     setQuizQuestions([]);
-  }, [auth?.user?.defaultLanguage, setQuizQuestions])
+  }, [auth?.user?.defaultLanguage, setQuizQuestions]);
 
   const onAnswer = (answer: Answer) => {
     gradient?.setAnswer(answer);

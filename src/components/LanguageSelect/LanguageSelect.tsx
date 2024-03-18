@@ -31,7 +31,7 @@ const LanguageSelect: FC<LanguageSelectProps> = (props) => {
           console.log(error);
         });
     }
-  }, [props.dialogOpen, setLanguages])
+  }, [props.dialogOpen, auth?.user?.defaultLanguage, setLanguages]);
 
   const handleDialogSelect = () => {
     if (inputValue) {
