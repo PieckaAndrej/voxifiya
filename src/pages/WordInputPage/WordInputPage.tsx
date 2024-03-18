@@ -8,6 +8,7 @@ import { Sentence } from '../../models/sentence';
 import { getSentences, postSentence } from '../../services/sentenceService';
 import styles from './WordInputPage.module.scss';
 import SentenceRow from './components/SentenceRow/SentenceRow';
+import { TransparentTooltip } from '../../components/TransparentTooltip';
 
 interface WordInputPageProps { }
 
@@ -198,16 +199,19 @@ const WordInputPage: FC<WordInputPageProps> = () => {
 
     return (
       <div className={classes.join(' ')} ref={floating ? null : textInputRef}>
-        <TextField
-          id={floating ? 'text-input' : 'text-input-floating'}
-          placeholder='Type here'
-          autoFocus={true}
-          className={styles.input}
-          onChange={onTextChange}
-          value={inputValue}
-          autoComplete='off'
-          sx={{maxWidth: '300px', justifySelf: 'flex-end'}}
-          variant='standard' />
+        <TransparentTooltip
+          title={sentences.items.length === 0 ? (auth?.user?.defaultLanguage?.name ?? '') : ''}>
+          <TextField
+            id={floating ? 'text-input' : 'text-input-floating'}
+            placeholder='Type here'
+            autoFocus={true}
+            className={styles.input}
+            onChange={onTextChange}
+            value={inputValue}
+            autoComplete='off'
+            sx={{maxWidth: '300px', justifySelf: 'flex-end'}}
+            variant='standard' />
+        </TransparentTooltip>
         <div>
           <IconButton
             onClick={onNewWordClick}

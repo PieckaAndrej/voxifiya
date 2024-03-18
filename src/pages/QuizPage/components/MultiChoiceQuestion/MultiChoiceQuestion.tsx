@@ -4,6 +4,7 @@ import { Answer } from '../../../../models/enums/answer';
 import { QuizQuestion, WrongAnswer } from '../../../../models/quiz';
 import styles from './MultiChoiceQuestion.module.scss';
 import { AdsClick, SpaceBar } from '@mui/icons-material';
+import { useIsMobile } from '../../../../hooks/useIsMobile';
 
 interface MultiChoiceQuestionProps {
   question: QuizQuestion;
@@ -15,6 +16,7 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
   const [answers, setAnswers] = useState<WrongAnswer[]>([]);
   const [answered, setAnswered] = useState<string | null>(null);
   const [showHint, setShowHint] = useState<boolean>(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const answers = [...props.question.wrongAnswers, {
@@ -28,11 +30,11 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
     setAnswered(null);
   }, [props.question, setAnswers, setAnswered]);
 
-  const callShowHint = useCallback(() => {
+  const callShowHint = () => {
     if (answered !== null) {
       setShowHint(true);
     }
-  }, [answered, setShowHint]);
+  };
 
   useEffect(() => {
     if (answered === null) {
@@ -93,7 +95,7 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
         <div className={styles.nextQuestion} onClick={() => props.onNextQuestion()}></div>
       }
       {
-        showHint &&
+        showHint && !isMobile &&
         <div className={styles.hint}>
           <span>
             Press spacebar or click for next question
