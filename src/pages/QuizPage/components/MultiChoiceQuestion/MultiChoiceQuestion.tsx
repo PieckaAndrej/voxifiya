@@ -3,6 +3,7 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import { Answer } from '../../../../models/enums/answer';
 import { QuizQuestion, WrongAnswer } from '../../../../models/quiz';
 import styles from './MultiChoiceQuestion.module.scss';
+import { AdsClick, SpaceBar } from '@mui/icons-material';
 
 interface MultiChoiceQuestionProps {
   question: QuizQuestion;
@@ -13,6 +14,7 @@ interface MultiChoiceQuestionProps {
 const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
   const [answers, setAnswers] = useState<WrongAnswer[]>([]);
   const [answered, setAnswered] = useState<string | null>(null);
+  const [showHint, setShowHint] = useState<boolean>(false);
 
   useEffect(() => {
     const answers = [...props.question.wrongAnswers, {
@@ -26,10 +28,30 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
     setAnswered(null);
   }, [props.question, setAnswers, setAnswered]);
 
+  const callShowHint = useCallback(() => {
+    if (answered !== null) {
+      setShowHint(true);
+    }
+  }, [answered, showHint]);
+
+  useEffect(() => {
+    if (answered === null) {
+      setShowHint(false);
+    } else {
+      setTimeout(() => {
+        callShowHint();
+      }, 3000)
+    }
+  }, [answered, setShowHint, callShowHint])
+
   const onAnswerClick = useCallback((id: string) => {
-    props.onAnswer(id === props.question.userSentenceId ? Answer.Correct : Answer.Wrong);
-    setAnswered(id);
-  }, [props, setAnswered]);
+    if (!answered) {
+      props.onAnswer(id === props.question.userSentenceId ? Answer.Correct : Answer.Wrong);
+      setAnswered(id);
+    } else {
+      props.onNextQuestion();
+    }
+  }, [props, answered, setAnswered]);
 
   const getAnsweredColor = useCallback((id: string) => {
     if (answered) {
@@ -69,6 +91,19 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
       {
         !!answered &&
         <div className={styles.nextQuestion} onClick={() => props.onNextQuestion()}></div>
+      }
+      {
+        showHint && 
+        <div className={styles.hint}>
+          <span>
+            Press spacebar or click for next question
+          </span>
+          <div className={styles.hintIcons}>
+            <SpaceBar />
+            /
+            <AdsClick />
+          </div>
+        </div>
       }
     </div>
   );

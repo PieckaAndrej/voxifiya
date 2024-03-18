@@ -56,3 +56,12 @@ $mobile-width: 768px;
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

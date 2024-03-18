@@ -69,15 +69,6 @@
   animation-timing-function: ease-out;
 }
 
-@keyframes fade {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 @keyframes openAlert {
   0% {
     opacity: 0;
