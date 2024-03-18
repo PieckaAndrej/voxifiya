@@ -62,6 +62,13 @@ const WordInputPage: FC<WordInputPageProps> = () => {
     }
   }, [inputValue, auth, setSentences, setScroll]);
 
+  // When language is changed
+  useEffect(() => {
+    setSentences({
+      items: []
+    });
+  }, [auth?.user?.defaultLanguage, setSentences]);
+
   // If new sentence scroll to it
   useEffect(() => {
     if (scroll) {

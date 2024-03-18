@@ -1,5 +1,7 @@
 @import "src/index";
 
+$answerGrid-gap: 15px;
+
 .MultiChoiceQuestion {
   display: flex;
   align-items: center;
@@ -16,10 +18,14 @@
 }
 
 .answers {
+  width: 100%;
+}
+
+.answersGrid {
   display: grid;
   grid-template-columns: repeat(2, 200px);
   grid-auto-rows: 100px;
-  gap: 15px;
+  gap: $answerGrid-gap;
   width: 100%;
 }
 
@@ -42,12 +48,20 @@
   }
 
   .answers,
+  .answersGrid,
   .question {
     height: 100%;
   }
 
   .answers {
-    grid-template-columns: repeat(2, auto);
     padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .answersGrid {
+    grid-template-columns: repeat(2, 50%);
+    margin-right: $answerGrid-gap;
   }
 }

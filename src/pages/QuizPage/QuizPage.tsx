@@ -19,14 +19,15 @@ const QuizPage: FC<QuizPageProps> = () => {
 
   useEffect(() => {
     if (quizQuestions.length <= 1 && !!auth?.user?.defaultLanguage) {
-      getQuiz(auth?.user?.defaultLanguage.code, QuizType.GuessForeign)
+      getQuiz(auth?.user?.defaultLanguage.code, QuizType.GuessForeign,
+        quizQuestions.length > 0 ? quizQuestions[quizQuestions.length - 1].userSentenceId : null)
         .then((response) => {
           if (response.data) {
             setQuizQuestions(prevQuizQuestions => {
               return [...prevQuizQuestions, ...response.data];
             });
           } else if (response.status === 204) {
-            setError('Enter at least 5 unique sentences in the sentence page');
+            setError('Enter at least 5 unique sentences in the sentences page');
           }
         })
         .catch((error) => {
@@ -34,6 +35,11 @@ const QuizPage: FC<QuizPageProps> = () => {
         });
     }
   }, [auth, quizQuestions, setQuizQuestions, setError]);
+
+  // When the language is changed
+  useEffect(() => {
+    setQuizQuestions([]);
+  }, [auth?.user?.defaultLanguage, setQuizQuestions])
 
   const onAnswer = (answer: Answer) => {
     gradient?.setAnswer(answer);

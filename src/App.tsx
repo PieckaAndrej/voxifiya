@@ -1,5 +1,5 @@
 import { Box, CircularProgress } from '@mui/material';
-import { FC, Fragment } from 'react';
+import { FC, Fragment, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import styles from './App.module.scss';
 import GradientBackground from './components/GradientBackground/GradientBackground';
@@ -18,6 +18,13 @@ import WordInputPage from './pages/WordInputPage/WordInputPage';
 
 const App: FC = () => {
   const auth = useAuth();
+  const [languageDialogOpen, setLanguageDialogOpen] = useState(false);
+
+  useEffect(() => {
+    if (auth?.user && !auth.user?.defaultLanguage) {
+      setLanguageDialogOpen(true);
+    }
+  }, [auth, setLanguageDialogOpen]);
 
   return (
     <div className={styles.App} >
@@ -25,7 +32,7 @@ const App: FC = () => {
         <GradientBackground />
         <div className={styles.noise}></div>
       </div>
-      <div className={styles.container}>
+      <div className={`${(auth?.user ? styles.contentFlex : '')} ${styles.content}`}>
         {
           auth?.user &&
           <Fragment>
@@ -33,7 +40,9 @@ const App: FC = () => {
             <div className={styles.menu}>
               <UserMenu />
             </div>
-            <LanguageSelect />
+            <LanguageSelect canClose={false}
+              dialogOpen={languageDialogOpen}
+              setDialogOpen={setLanguageDialogOpen}/>
           </Fragment>
         }
         {
@@ -58,17 +67,17 @@ const App: FC = () => {
               />
               {
                 auth?.user ? (
-                  <>
+                  <Fragment>
                     <Route path="/" element={<Navigate to={'/sentences'} />} />
                     <Route path="login" element={<Navigate to={'/'} />} />
                     <Route path="register" element={<Navigate to={'/'} />} />
-                  </>
+                  </Fragment>
                 ) : (
-                  <>
+                  <Fragment>
                     <Route path="/" element={<HomePage />} />
                     <Route path="login" element={<LoginPage />} />
                     <Route path="register" element={<RegisterPage />} />
-                  </>
+                  </Fragment>
                 )
               }
             </Routes>

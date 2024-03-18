@@ -62,7 +62,9 @@ const MultiChoiceQuestion: FC<MultiChoiceQuestionProps> = (props) => {
     <div className={styles.MultiChoiceQuestion} data-testid="MultiChoiceQuestion">
       <div className={styles.question}>{props.question.question}</div>
       <div className={styles.answers}>
-        {renderAnswers()}
+        <div className={styles.answersGrid}>
+          {renderAnswers()}
+        </div>
       </div>
       {
         !!answered &&

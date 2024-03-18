@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import styles from './LanguageSelect.module.scss';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Autocomplete, TextField } from '@mui/material';
 import { useAuth } from '../../hooks/useAuth';
@@ -6,40 +6,45 @@ import { getLanguages } from '../../services/sentenceService';
 import { Language } from '../../models/language';
 import { patchMe } from '../../services/userService';
 
-interface LanguageSelectProps { }
+interface LanguageSelectProps {
+  canClose: boolean;
+  dialogOpen: boolean;
+  setDialogOpen: Dispatch<SetStateAction<boolean>>;
+}
 
-const LanguageSelect: FC<LanguageSelectProps> = () => {
+const LanguageSelect: FC<LanguageSelectProps> = (props) => {
   const auth = useAuth();
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [languages, setLanguages] = useState<Language[]>([]);
   const [inputValue, setInputValue] = useState<Language | null>(null);
 
   useEffect(() => {
-    if (!auth?.user?.defaultLanguage) {
-      setDialogOpen(true);
-
+    if (props.dialogOpen) {
       getLanguages()
         .then((response) => {
           setLanguages(response.data);
+
+          if (auth?.user?.defaultLanguage) {
+            setInputValue(response.data.find(l => l.code === auth.user?.defaultLanguage?.code) ?? null);
+          }
         })
         .catch((error) => {
           console.log(error);
         });
     }
-  }, [auth, setDialogOpen, setLanguages]);
+  }, [props.dialogOpen, setLanguages])
 
   const handleDialogSelect = () => {
     if (inputValue) {
       patchMe(inputValue)
         .then((response) => {
-          setDialogOpen(false);
+          props.setDialogOpen(false);
 
           const user = auth?.user;
 
           if (user) {
             user.defaultLanguage = response.data.defaultLanguage;
 
-            auth.setUser(user);
+            auth.setUser({...user});
           }
         })
         .catch((error) => {
@@ -57,14 +62,18 @@ const LanguageSelect: FC<LanguageSelectProps> = () => {
   return (
     <div className={styles.LanguageSelect} data-testid='LanguageSelect'>
       <Dialog
-        open={dialogOpen}
+        open={props.dialogOpen}
         slotProps={{
           backdrop: {
             sx: { backgroundColor: 'rgba(0, 0, 0, 0.4)' }
           }
         }}
-        disableEscapeKeyDown={true}
-        onClose={() => { }}
+        disableEscapeKeyDown={!props.canClose}
+        onClose={() => {
+          if (props.canClose) {
+            props.setDialogOpen(false);
+          }
+        }}
         aria-labelledby='language-dialog-title'
         aria-describedby='language-dialog-description'>
         <DialogTitle id='language-dialog-title'>

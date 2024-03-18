@@ -1,15 +1,17 @@
 import { Edit } from '@mui/icons-material';
 import { Box, Button, IconButton, Popover } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { TransparentTooltip } from '../TransparentTooltip';
 import styles from './UserMenu.module.scss';
+import LanguageSelect from '../LanguageSelect/LanguageSelect';
 
 interface UserMenuProps { }
 
 const UserMenu: FC<UserMenuProps> = () => {
   const auth = useAuth();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [languageDialogOpen, setLanguageDialogOpen] = useState(false);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -45,7 +47,7 @@ const UserMenu: FC<UserMenuProps> = () => {
             <Box display='inline-flex' alignItems='center'>
               <span>{auth?.user?.defaultLanguage?.name}</span>
               <TransparentTooltip title='Change language'>
-                <IconButton onClick={() => {}} size='small'>
+                <IconButton onClick={() => setLanguageDialogOpen(true)} size='small'>
                   <Edit fontSize='small' />
                 </IconButton>
               </TransparentTooltip>
@@ -56,6 +58,9 @@ const UserMenu: FC<UserMenuProps> = () => {
           </Button>
         </Box>
       </Popover>
+      <LanguageSelect canClose={true}
+        dialogOpen={languageDialogOpen}
+        setDialogOpen={setLanguageDialogOpen}/>
     </div>
   );
 };

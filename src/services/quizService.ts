@@ -7,12 +7,14 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export const getQuiz = (language: string, type: QuizType, noOfQuestions: number = 5) => {
+export const getQuiz = (language: string, type: QuizType, notFirstSentenceId: string | null = null,
+  noOfQuestions: number = 5) => {
   return instance.get<QuizQuestion[]>('', {
     params: {
       language,
       type,
-      noOfQuestions
+      noOfQuestions,
+      notFirstSentenceId
     }
   });
 };
