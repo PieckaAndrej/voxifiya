@@ -1,0 +1,118 @@
+svg {
+  #A {
+    animation-delay: 0.1s;
+  }
+
+  #A_2 {
+    animation-delay: 1.1s;
+  }
+
+  #A_3 {
+    animation-delay: 0.5s;
+  }
+
+  #I {
+    animation-delay: 0.8s;
+  }
+
+  #I_2 {
+    animation-delay: 0.1s;
+  }
+
+  #I_3 {
+    animation-delay: 0s;
+  }
+
+  #I_4 {
+    animation-delay: 0.9s;
+  }
+
+  #I_5 {
+    animation-delay: 2.1s;
+  }
+
+  #Y {
+    animation-delay: 1.2s;
+  }
+
+  #V {
+    animation-delay: 1.5s;
+  }
+
+  #V_2 {
+    animation-delay: 1.2s;
+  }
+
+  #O {
+    animation-delay: 0.7s;
+  }
+
+  #O_2 {
+    animation-delay: 0.9s;
+  }
+
+  #O_3 {
+    animation-delay: 0.5s;
+  }
+
+  #X {
+    animation-delay: 0s;
+  }
+
+  #X_2 {
+    animation-delay: 0.2s;
+  }
+
+  #X_3 {
+    animation-delay: 0.5s;
+  }
+
+  #F {
+    animation-delay: 0.7s;
+  }
+
+  #F_2 {
+    animation-delay: 0.8s;
+  }
+
+  #F_3,
+  #A,
+  #A_2,
+  #A_3,
+  #I,
+  #I_2,
+  #I_3,
+  #I_4,
+  #I_5,
+  #Y,
+  #V,
+  #V_2,
+  #O,
+  #O_2,
+  #O_3,
+  #X,
+  #X_2,
+  #X_3,
+  #F,
+  #F_2,
+  #F_3 {
+    animation-name: fly;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+  }
+}
+
+@keyframes fly {
+  0% {
+    transform: translate(0, 0);
+  }
+  30% {
+    transform: translate(-1px, -3px);
+  }
+  60% {
+    transform: translate(5px, 1px);
+  }
+  90% {
+    transform: translate(-5px, 2px);
+  }
+}

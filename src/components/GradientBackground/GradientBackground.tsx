@@ -20,6 +20,11 @@ const GradientBackground: FC<GradientBackgroundProps> = () => {
 
   const backgroundConfig: { [key: string]: BackgroundGradient } = useMemo(() => {
     return {
+      home: {
+        color: 'transparent',
+        className: styles.homeGradient,
+        path: '/'
+      },
       register: {
         color: customColors.registerGradient.bg,
         className: styles.registerGradient,
