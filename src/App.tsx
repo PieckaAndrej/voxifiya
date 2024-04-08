@@ -42,51 +42,53 @@ const App: FC = () => {
             </div>
             <LanguageSelect canClose={false}
               dialogOpen={languageDialogOpen}
-              setDialogOpen={setLanguageDialogOpen}/>
+              setDialogOpen={setLanguageDialogOpen} />
           </Fragment>
         }
-        {
-          !auth?.loading ? (
-            <Routes>
-              <Route path="*" element={<ErrorPage />} />
-              <Route
-                path="sentences"
-                element={
-                  <ProtectedRoute>
-                    <WordInputPage />
-                  </ProtectedRoute>
+        <div className={styles.page}>
+          {
+            !auth?.loading ? (
+              <Routes>
+                <Route path="*" element={<ErrorPage />} />
+                <Route
+                  path="sentences"
+                  element={
+                    <ProtectedRoute>
+                      <WordInputPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="quiz"
+                  element={
+                    <ProtectedRoute>
+                      <QuizPage />
+                    </ProtectedRoute>
+                  }
+                />
+                {
+                  auth?.user ? (
+                    <Fragment>
+                      <Route path="/" element={<Navigate to={'/sentences'} />} />
+                      <Route path="login" element={<Navigate to={'/'} />} />
+                      <Route path="register" element={<Navigate to={'/'} />} />
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="login" element={<LoginPage />} />
+                      <Route path="register" element={<RegisterPage />} />
+                    </Fragment>
+                  )
                 }
-              />
-              <Route
-                path="quiz"
-                element={
-                  <ProtectedRoute>
-                    <QuizPage />
-                  </ProtectedRoute>
-                }
-              />
-              {
-                auth?.user ? (
-                  <Fragment>
-                    <Route path="/" element={<Navigate to={'/sentences'} />} />
-                    <Route path="login" element={<Navigate to={'/'} />} />
-                    <Route path="register" element={<Navigate to={'/'} />} />
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="login" element={<LoginPage />} />
-                    <Route path="register" element={<RegisterPage />} />
-                  </Fragment>
-                )
-              }
-            </Routes>
-          ) : (
-            <Box display='flex' alignItems='center' width='100%' justifyContent='center'>
-              <CircularProgress sx={{width: '70px', height: '70px'}} />
-            </Box>
-          )
-        }
+              </Routes>
+            ) : (
+              <Box display='flex' alignItems='center' width='100%' justifyContent='center'>
+                <CircularProgress sx={{ width: '70px', height: '70px' }} />
+              </Box>
+            )
+          }
+        </div>
       </div>
     </div>
   );
